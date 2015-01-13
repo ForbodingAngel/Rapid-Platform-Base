@@ -164,4 +164,10 @@ require get_template_directory() . '/inc/customizer.php';
  */
 require get_template_directory() . '/inc/jetpack.php';
 
+/* Add the ability to call a menu with a shortcode: [menu name="nameofthemenu"] */
 
+function print_menu_shortcode($atts, $content = null) {
+    extract(shortcode_atts(array( 'name' => null, ), $atts));
+    return wp_nav_menu( array( 'menu' => $name, 'echo' => false ) );
+}
+add_shortcode('menu', 'print_menu_shortcode');
