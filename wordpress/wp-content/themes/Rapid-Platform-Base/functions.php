@@ -171,3 +171,8 @@ function print_menu_shortcode($atts, $content = null) {
     return wp_nav_menu( array( 'menu' => $name, 'echo' => false ) );
 }
 add_shortcode('menu', 'print_menu_shortcode');
+
+function maxMenu() {
+    return wp_nav_menu( array( 'theme_location' => 'primary' ) );
+}
+add_shortcode('maxmenu', 'maxMenu');

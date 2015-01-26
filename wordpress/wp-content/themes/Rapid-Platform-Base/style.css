@@ -26,7 +26,10 @@ and Blueprint http://www.blueprintcss.org/
 ----------------------------------------------------------------
 0.0 Layout Options
 	0.1 Header Sidebar Widget
-	0.2 Footer Sidebar Widget
+	0.2 Sidebar Widgets
+	0.3 Footer Sidebar Widget
+	0.4 Footer Widget (Site-Info)
+	0.5 Site Colors and Padding
 1.0 Reset
 2.0 Typography
 3.0 Elements
@@ -55,23 +58,13 @@ and Blueprint http://www.blueprintcss.org/
 0.0 Layout Options
 --------------------------------------------------------------*/
 
-/* With right hand sidebar */
-#primary {
-	float: left;
-	max-width: 69%;
-	width: 100%;
-}
-
-.secondary {
-	float: right;
-	max-width: 29%;
-	width: 100%;
-}
+/* Inline Styles are bad mmk? But in this case they are necessary because we want our pages to automagically work properly whether they have a sidebar or not */
+/* Important is being used to combat necessary inline styles */
 
 @media screen and (min-width: 801px) {
 
 	.secondary-responsive {
-		display: none;
+		display: none !important;
 	}
 }
 
@@ -82,13 +75,13 @@ and Blueprint http://www.blueprintcss.org/
 	}
 
 	#primary {
-		float: none;
-		max-width: 100%;
+		float: none !important;
+		max-width: 100% !important;
 	}
 
 	.secondary {
-		float: none;
-		max-width: 100%;
+		float: none !important;
+		max-width: 100% !important;
 	}
 }
 /* End - With right hand sidebar */
@@ -114,11 +107,73 @@ and Blueprint http://www.blueprintcss.org/
 }
 
 /*--------------------------------------------------------------
-0.2 Footer Sidebar Widget
+0.2 Sidebar Widgets
+--------------------------------------------------------------*/
+
+/** Only use this if the menu is in a sidebar **/
+.sidebar-maxmenu-widget #mega-menu-wrap-primary-2 #mega-menu-primary-2 li {
+  border-bottom: 1px dashed #404040;
+  font-family: Oswald;
+  display: block !important;
+}
+
+/*--------------------------------------------------------------
+0.3 Footer Sidebar Widget
 --------------------------------------------------------------*/
 
 .footer-sidebar-container {
 }
+
+/*--------------------------------------------------------------
+0.4 Footer Widget (Site-Info)
+--------------------------------------------------------------*/
+
+
+/*--------------------------------------------------------------
+0.5 Site Colors and Padding
+--------------------------------------------------------------*/
+/*
+body {
+	background-color: #ccc;
+}
+
+#masthead {
+	background-color: #aaa;
+}
+#content {
+	background-color: #fff;
+}
+.secondary {
+	background-color: #aaa;
+}
+.site-footer {
+	background-color: #aaa;
+}
+*/
+
+/* Padding and pizzaz */
+
+#page {
+	/*box-shadow: 0px 0px 10px #000;*/
+}
+
+#masthead {
+	padding-left: 20px;
+	padding-right: 20px;
+}
+#content {
+	padding-left: 20px;
+	padding-right: 20px;
+}
+.secondary {
+	padding-left: 10px;
+	padding-right: 10px;
+}
+.site-footer {
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
 
 /*--------------------------------------------------------------
 1.0 Reset
@@ -161,8 +216,6 @@ body {
 
 #page {
 	max-width: 1000px;
-	padding-left: 20px;
-	padding-right: 20px;
 	margin-left: auto;
 	margin-right: auto;
 }

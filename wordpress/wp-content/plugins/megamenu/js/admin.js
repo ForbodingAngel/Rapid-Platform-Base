@@ -2,7 +2,6 @@
 
 /**
  * Mega Menu jQuery Plugin
- * @todo sort out widget.
  */
 (function ($) {
     "use strict";
@@ -11,9 +10,7 @@
 
         var panel = $("<div />");
 
-        panel.settings = $.extend({
-            cols: 6
-        }, options);
+        panel.settings = options;
 
         panel.log = function (message) {
             if (window.console && console.log) {
@@ -33,7 +30,8 @@
                 html: "",
                 initialWidth: '991',
                 scrolling: false,
-                top: 100
+                top: '10%',
+                initialHeight: '500'
             });
 
             $.ajax({
@@ -43,7 +41,8 @@
                     action: "mm_get_lightbox_html", 
                     _wpnonce: megamenu.nonce, 
                     menu_item_id: panel.settings.menu_item_id,
-                    menu_item_depth: panel.settings.menu_item_depth
+                    menu_item_depth: panel.settings.menu_item_depth,
+                    menu_id: panel.settings.menu_id
                 },
                 cache: false,
                 beforeSend: function() {
@@ -87,7 +86,7 @@
 
                                 var data = $(this).serialize();
 
-                                var post = data + '&action=mm_save_menu_item_settings&_wpnonce=' + megamenu.nonce + '&menu_item_id=' + panel.settings.menu_item_id;
+                                var post = data + '&action=mm_save_menu_item_icon&_wpnonce=' + megamenu.nonce + '&menu_item_id=' + panel.settings.menu_item_id;
 
                                 $.post(ajaxurl, post, function (submit_response) {
 
@@ -126,7 +125,7 @@
 
                         if (idx == 'mega_menu') {
 
-                            var widget_selector = content.find('select');
+                            var widget_selector = content.find('#mm_widget_selector');
 
                             widget_selector.on('change', function() {
 
@@ -162,7 +161,7 @@
 
                             });
 
-                            var enable_checkbox = content.find('input');
+                            var enable_checkbox = content.find('input[type=checkbox]');
 
                             enable_checkbox.on('change', function() {
 
@@ -184,10 +183,35 @@
 
                             });
 
+                            var number_of_columns = content.find('#mm_number_of_columns');
+
+                            number_of_columns.on('change', function() {
+
+                                content.find("#widgets").attr('data-columns', $(this).val());
+
+                                start_saving();
+
+                                var postdata = {
+                                    action: "mm_save_menu_item_settings",
+                                    settings: { panel_columns: $(this).val() },
+                                    menu_item_id: panel.settings.menu_item_id,
+                                    _wpnonce: megamenu.nonce
+                                };
+
+                                $.post(ajaxurl, postdata, function (select_response) {
+
+                                    end_saving();
+
+                                    panel.log(select_response);
+                                });
+
+                            });
+
                             var widget_area = content.find('#widgets');
 
                             widget_area.sortable({
                                 forcePlaceholderSize: true,
+                                items : '.widget:not(.sub_menu)',
                                 placeholder: "drop-area",
                                 start: function (event, ui) {
                                     $(".widget").removeClass("open");
@@ -220,7 +244,7 @@
                         });
 
                         if ( ( panel.settings.menu_item_depth == 0 && idx == 'mega_menu' ) || 
-                             ( panel.settings.menu_item_depth > 0 && idx == 'menu_icon' ) ) {
+                             ( panel.settings.menu_item_depth > 0 && idx == 'general_settings' ) ) {
                             content.show();
                             tab.addClass('active');
                         }
@@ -258,6 +282,8 @@
             var edit = widget.find(".widget-edit");
             var widget_inner = widget.find(".widget-inner");
             var widget_id = widget.attr("data-widget-id");
+            var menu_item_id = widget.attr("data-menu-item-id");
+            var type = widget.is('[data-widget-id]') ? 'widget' : 'menu-item';
 
             widget.bind("on_drop", function () {
 
@@ -280,23 +306,43 @@
             expand.on("click", function () {
 
                 var cols = parseInt(widget.attr("data-columns"), 10);
+                var maxcols = parseInt($("#mm_number_of_columns").val(), 10);
 
-                if (cols < panel.settings.cols) {
+                if (cols < maxcols) {
                     cols = cols + 1;
 
                     widget.attr("data-columns", cols);
 
                     start_saving();
 
-                    $.post(ajaxurl, {
-                        action: "mm_update_columns",
-                        widget_id: widget_id,
-                        columns: cols,
-                        _wpnonce: megamenu.nonce
-                    }, function (expand_response) {
-                        end_saving();
-                        panel.log(expand_response);
-                    });
+                    if (type == 'widget') {
+
+                        $.post(ajaxurl, {
+                            action: "mm_update_widget_columns",
+                            widget_id: widget_id,
+                            columns: cols,
+                            _wpnonce: megamenu.nonce
+                        }, function (expand_response) {
+                            end_saving();
+                            panel.log(expand_response);
+                        });
+
+                    }
+
+                    if (type == 'menu-item' ) {
+
+                        $.post(ajaxurl, {
+                            action: "mm_save_menu_item_settings",
+                            menu_item_id: menu_item_id,
+                            settings: { mega_menu_columns: cols },
+                            _wpnonce: megamenu.nonce
+                        }, function (contract_response) {
+                            end_saving();
+                            panel.log(contract_response);
+                        });
+
+                    }
+
                 }
 
             });
@@ -305,22 +351,49 @@
 
                 var cols = parseInt(widget.attr("data-columns"), 10);
 
-                if (cols > 0) {
+                // account for widgets that have say 8 columns but the panel is only 6 wide
+                var maxcols = parseInt($("#mm_number_of_columns").val(), 10);
+
+                if (cols > maxcols) {
+                    cols = maxcols;
+                }
+
+                if (cols > 1) {
                     cols = cols - 1;
                     widget.attr("data-columns", cols);
+                } else {
+                    return;
                 }
 
                 start_saving();
 
-                $.post(ajaxurl, {
-                    action: "mm_update_columns",
-                    widget_id: widget_id,
-                    columns: cols,
-                    _wpnonce: megamenu.nonce
-                }, function (contract_response) {
-                    end_saving();
-                    panel.log(contract_response);
-                });
+                if (type == 'widget') {
+
+                    $.post(ajaxurl, {
+                        action: "mm_update_widget_columns",
+                        widget_id: widget_id,
+                        columns: cols,
+                        _wpnonce: megamenu.nonce
+                    }, function (contract_response) {
+                        end_saving();
+                        panel.log(contract_response);
+                    });
+
+                }
+
+                if (type == 'menu-item') {
+
+                    $.post(ajaxurl, {
+                        action: "mm_save_menu_item_settings",
+                        menu_item_id: menu_item_id,
+                        settings: { mega_menu_columns: cols },
+                        _wpnonce: megamenu.nonce
+                    }, function (contract_response) {
+                        end_saving();
+                        panel.log(contract_response);
+                    });
+
+                }
 
             });
 
@@ -426,7 +499,8 @@ jQuery(function ($) {
     $('#menu-to-edit li.menu-item').each(function() {
 
         var menu_item = $(this);
-        var title = menu_item.find('.item-title').text();
+        var menu_id = $('input#menu').val();
+        var title = menu_item.find('.menu-item-title').text();
         var id = parseInt(menu_item.attr('id').match(/[0-9]+/)[0], 10);
 
         var button = $("<span>").addClass("mm_launch")
@@ -439,7 +513,8 @@ jQuery(function ($) {
                                     $(this).megaMenu({
                                         menu_item_id: id,
                                         menu_item_title: title,
-                                        menu_item_depth: depth 
+                                        menu_item_depth: depth,
+                                        menu_id: menu_id
                                     });
                                 });
 

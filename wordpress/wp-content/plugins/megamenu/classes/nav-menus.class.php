@@ -10,6 +10,28 @@ if ( ! class_exists( 'Mega_Menu_Nav_Menus' ) ) :
  */
 class Mega_Menu_Nav_Menus {
 
+    /**
+     * Return the default settings for each menu item
+     *
+     * @since 1.5
+     */
+    public static function get_menu_item_defaults() {
+
+        $defaults = array(
+            'type' => 'flyout',
+            'align' => 'bottom-left',
+            'icon' => 'disabled',
+            'hide_text' => 'false',
+            'disable_link' => 'false',
+            'hide_arrow' => 'false',
+            'item_align' => 'left',
+            'panel_columns' => 6, // total number of columns displayed in the panel
+            'mega_menu_columns' => 1 // for sub menu items, how many columns to span in the panel
+        );
+
+        return apply_filters( "megamenu_menu_item_defaults", $defaults );
+
+    }
 
     /**
      * Constructor

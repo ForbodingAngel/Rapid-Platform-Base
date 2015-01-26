@@ -1,18 +1,17 @@
 <?php
-/**
- * The template for displaying all pages.
- *
- * This is the template that displays all pages by default.
- * Please note that this is the WordPress construct of pages
- * and that other 'pages' on your WordPress site will use a
- * different template.
- *
- * @package rapidtesting
- */
+/*
+Template Name: Page + Sidebar
+*/
 
 get_header(); ?>
+<?php get_template_part( 'sidebar-responsive' ); ?>
 
-	<div id="primary" class="content-area">
+	<div id="primary" class="content-area" style="
+/* Inline Styles are bad mmk? But in this case they are necessary because we want our pages to automagically work properly whether they have a sidebar or not */
+float: left;
+max-width: 69%;
+width: 100%;
+">
 		<main id="main" class="site-main" role="main">
 
 			<?php while ( have_posts() ) : the_post(); ?>
@@ -30,4 +29,6 @@ get_header(); ?>
 
 		</main><!-- #main -->
 	</div><!-- #primary -->
+
+<?php get_template_part( 'sidebar' ); ?>
 <?php get_footer(); ?>

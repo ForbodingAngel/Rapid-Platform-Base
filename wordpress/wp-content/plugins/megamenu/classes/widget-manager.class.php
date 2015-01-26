@@ -26,7 +26,7 @@ class Mega_Menu_Widget_Manager {
 
 		add_action( 'wp_ajax_mm_edit_widget', array( $this, 'ajax_show_widget_form' ) );
 		add_action( 'wp_ajax_mm_save_widget', array( $this, 'ajax_save_widget' ) );
-		add_action( 'wp_ajax_mm_update_columns', array( $this, 'ajax_update_columns' ) );
+		add_action( 'wp_ajax_mm_update_widget_columns', array( $this, 'ajax_update_columns' ) );
 		add_action( 'wp_ajax_mm_delete_widget', array( $this, 'ajax_delete_widget' ) );
 		add_action( 'wp_ajax_mm_add_widget', array( $this, 'ajax_add_widget' ) );
 		add_action( 'wp_ajax_mm_move_widget', array( $this, 'ajax_move_widget' ) );
@@ -232,14 +232,13 @@ class Mega_Menu_Widget_Manager {
 
 			$disabled_widgets = array('megamenu');
 
-			$disabled_widgets = apply_filters("megamenu_incompatible_widgets", $disabled_widgets );
+			$disabled_widgets = apply_filters( "megamenu_incompatible_widgets", $disabled_widgets );
 
 			if ( ! in_array( $widget->id_base, $disabled_widgets ) ) {
 
 				$widgets[] = array(
 					'text' => $widget->name,
-					'value' => $widget->id_base,
-					'description' => $widget->widget_options['description']
+					'value' => $widget->id_base
 				);
 
 			}
@@ -723,7 +722,7 @@ class Mega_Menu_Widget_Manager {
 	 * @since 1.0
 	 * @return array
 	 */
-	private function get_mega_menu_sidebar_widgets() {
+	public function get_mega_menu_sidebar_widgets() {
 
 		$sidebar_widgets = wp_get_sidebars_widgets();
 

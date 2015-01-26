@@ -3,7 +3,7 @@ Contributors: megamenu
 Tags: menu, mega menu, navigation, menu icons, menu style, responsive menu, megamenu, widget, dropdown menu, drag and drop, hover, click, responsive, retina, theme editor, widget, sidebar, icons, dashicons
 Requires at least: 3.8
 Tested up to: 4.1
-Stable tag: 1.3.3
+Stable tag: 1.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,7 +13,7 @@ Easy to use drag & drop WordPress Mega Menu plugin. Integrates with the existing
 
 WordPress Mega Menu Plugin. Use the built in drag & drop widget editor to build your mega panels.
 
-https://www.youtube.com/watch?v=6vx151V3oec
+https://www.youtube.com/watch?v=44dJwP1AXT8
 
 Documentation & Demo: http://www.maxmegamenu.com
 
@@ -69,12 +69,6 @@ Tested with the 20 most popular themes, all compatible with the exceptions of:
 1. Search for "Max Menu"
 1. Click "Install"
 
-== Frequently Asked Questions ==
-
-Q. I can only save around 70 menu items, then they disappear
-
-A. See: http://wordpress.org/support/topic/way-to-unbold-header-items?replies=16
-
 == Screenshots ==
 
 See http://www.maxmegamenu.com for more screenshots
@@ -86,6 +80,23 @@ See http://www.maxmegamenu.com for more screenshots
 5. Back end: Use the theme editor to change the appearance of your menus
 
 == Changelog ==
+
+= 1.5.1 =
+
+* Fix: Bug causing menu item to lose checkbox settings when saving icon
+
+= 1.5 =
+
+* New feature: Change number of columns to use in Mega Menus (per menu item)
+* New feature: Define how many columns each second level menu items should take up
+* New feature: Hide menu item text
+* New feature: Hide menu item arrow indicator
+* New feature: Disable menu item link
+* New feature: Align menu item
+* Fix: Allow css to be cached when menu is not found
+* Fix: Apply inline-block styling to second level menu items displayed in Mega Menu
+* Fix: AJAX Error when widgets lack description (reported by and thanks to: novlenova)
+* Improvement: Refactor extraction and setting of menu item settings
 
 = 1.4 =
 

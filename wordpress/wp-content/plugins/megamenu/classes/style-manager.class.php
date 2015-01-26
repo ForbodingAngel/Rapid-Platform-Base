@@ -280,30 +280,31 @@ final class Mega_Menu_Style_Manager {
 	  	foreach ( $settings as $location => $settings ) {
 
             if ( ! isset( $settings['enabled'] ) ) {
+
                 continue;
+
             }
 
             if ( ! has_nav_menu( $location ) ) {
 
-                $exception = true;
                 $css .= "/** Menu for location does not exist: {$location} **/";
+                continue;
+                
+            }
 
-            } else {
+            $theme = $this->get_theme_settings_for_location( $location );
+            $menu_id = $this->get_menu_id_for_location( $location );
+            $compiled_css = $this->generate_css_for_location( $location, $theme, $menu_id, $scss_formatter );
 
-                $theme = $this->get_theme_settings_for_location( $location );
-                $menu_id = $this->get_menu_id_for_location( $location );
-                $compiled_css = $this->generate_css_for_location( $location, $theme, $menu_id, $scss_formatter );
+			if ( is_wp_error( $compiled_css ) ) {
 
-    			if ( is_wp_error( $compiled_css ) ) {
+                $exception = true;
+                $css .= "/** Failed to compile CSS for location: {$location} **/";
 
-                    $exception = true;
-                    $css .= "/** Failed to compile CSS for location: {$location} **/";
+			} else {
 
-    			} else {
+                $css .= $compiled_css;
 
-                    $css .= $compiled_css;
-
-                }
             }
 
 	  	}
@@ -390,8 +391,7 @@ final class Mega_Menu_Style_Manager {
 
         $scss = "\$wrap: \"#mega-menu-wrap-{$location}-{$menu_id}\";
                  \$menu: \"#mega-menu-{$location}-{$menu_id}\";
-                 \$menu_id: \"{$menu_id}\";
-                 \$number_of_columns: 6;";
+                 \$menu_id: \"{$menu_id}\";";
 
         foreach( $theme as $name => $value ) {
 
@@ -477,7 +477,7 @@ final class Mega_Menu_Style_Manager {
 
             if ( file_exists( $path ) ) {
 
-                return file_get_contents( $path );
+                return apply_filters( "megamenu_load_scss_file_contents", file_get_contents( $path ) );
 
             }
 
@@ -514,6 +514,8 @@ final class Mega_Menu_Style_Manager {
         }
 
 		wp_enqueue_style( 'dashicons' );
+
+        do_action( 'megamenu_enqueue_public_scripts' );
 
 
 	}
