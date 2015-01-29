@@ -111,6 +111,8 @@ and Blueprint http://www.blueprintcss.org/
 --------------------------------------------------------------*/
 
 /** Only use this if the menu is in a sidebar **/
+/** Sidebar menu must be put in the sidebar-maxmenu-widget class to be displayed vertically, so wrap the menu in a div **/
+
 .sidebar-maxmenu-widget #mega-menu-wrap-primary-2 #mega-menu-primary-2 li {
   border-bottom: 1px dashed #404040;
   font-family: Oswald;

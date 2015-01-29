@@ -1,6 +1,6 @@
 <?php
 /*
-Single Post Template: Post + Sidebar
+Single Post Template: Post + Sidebar + Top Sidebar (When Responsive)
 Description: Allows you to add the sidebar to individual posts
 */
 

@@ -1,6 +1,6 @@
 <?php
 /*
-Template Name: Page + Sidebar
+Template Name: Page + Sidebar + Top Sidebar (When Responsive)
 */
 
 get_header(); ?>
