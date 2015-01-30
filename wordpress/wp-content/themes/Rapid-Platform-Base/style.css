@@ -176,6 +176,31 @@ body {
 	padding-right: 20px;
 }
 
+/* Fix sidebars */
+
+.with-left-sidebar {
+	float: right;
+	max-width: 69%;
+	width: 100%;
+}
+
+.sidebar-left {
+	float: left;
+	max-width: 29%;
+	width: 100%;
+}
+
+.with-right-sidebar {
+	float: left;
+	max-width: 69%;
+	width: 100%;
+}
+
+.sidebar-right {
+	float: right;
+	max-width: 29%;
+	width: 100%;
+}
 
 /*--------------------------------------------------------------
 1.0 Reset
