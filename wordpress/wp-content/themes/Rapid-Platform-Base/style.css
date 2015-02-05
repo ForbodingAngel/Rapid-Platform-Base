@@ -30,6 +30,7 @@ and Blueprint http://www.blueprintcss.org/
 	0.3 Footer Sidebar Widget
 	0.4 Footer Widget (Site-Info)
 	0.5 Site Colors and Padding
+	0.9 Site Fixes
 1.0 Reset
 2.0 Typography
 3.0 Elements
@@ -120,6 +121,32 @@ and Blueprint http://www.blueprintcss.org/
   display: block !important;
 }
 
+/* Fix sidebars */
+
+.with-left-sidebar {
+	float: right;
+	max-width: 69%;
+	width: 100%;
+}
+
+.sidebar-left {
+	float: left;
+	max-width: 29%;
+	width: 100%;
+}
+
+.with-right-sidebar {
+	float: left;
+	max-width: 69%;
+	width: 100%;
+}
+
+.sidebar-right {
+	float: right;
+	max-width: 29%;
+	width: 100%;
+}
+
 /*--------------------------------------------------------------
 0.3 Footer Sidebar Widget
 --------------------------------------------------------------*/
@@ -177,30 +204,12 @@ body {
 	padding-right: 20px;
 }
 
-/* Fix sidebars */
+/*--------------------------------------------------------------
+0.9 Site Fixes
+--------------------------------------------------------------*/
 
-.with-left-sidebar {
-	float: right;
-	max-width: 69%;
-	width: 100%;
-}
-
-.sidebar-left {
-	float: left;
-	max-width: 29%;
-	width: 100%;
-}
-
-.with-right-sidebar {
-	float: left;
-	max-width: 69%;
-	width: 100%;
-}
-
-.sidebar-right {
-	float: right;
-	max-width: 29%;
-	width: 100%;
+#mega-menu-wrap-primary-2 .mega-menu-toggle + label:after {
+	content: 'Menu';
 }
 
 /*--------------------------------------------------------------
