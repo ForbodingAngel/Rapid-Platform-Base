@@ -21,26 +21,48 @@
         }
 
         function closePanels() {
-            $('li', menu).removeClass('mega-toggle-on');
-            $('li.mega-menu-megamenu > ul.mega-sub-menu, li.mega-menu-flyout ul.mega-sub-menu', menu).hide();
+            $('.mega-toggle-on > a', menu).each(function() {
+                hidePanel($(this), true);
+            });
         }
 
-        function hidePanel(anchor) {
-            anchor.parent().removeClass('mega-toggle-on');
-            anchor.siblings('.mega-sub-menu').hide();
+        function hidePanel(anchor, immediate) {
+            anchor.parent().removeClass('mega-toggle-on').triggerHandler("close_panel");
+
+            if (immediate) {
+                anchor.siblings('.mega-sub-menu').hide();
+            } else {
+                var effect = megamenu.effect[menu.settings.effect]['out'];
+
+                if (effect.css) {
+                    anchor.siblings('.mega-sub-menu').css(effect.css);
+                }
+
+                if (effect.animate) {
+                    anchor.siblings('.mega-sub-menu').animate(effect.animate, 'fast');
+                }
+            }
         }
 
         function showPanel(anchor) {
-            anchor.parent().addClass('mega-toggle-on').siblings().children('a').each(function() {
-                hidePanel($(this));
+
+            // all open children of open siblings
+            anchor.parent().siblings().find('.mega-toggle-on').addBack('.mega-toggle-on').children('a').each(function() { 
+                hidePanel($(this), true);
             });
 
-            if (menu.settings.effect === 'fade') {
-                anchor.siblings('.mega-sub-menu').css('display', 'none').fadeIn(megamenu.fade_speed);
-            } else if (menu.settings.effect === 'slide') {
-                anchor.siblings('.mega-sub-menu').css('display', 'none').slideDown(megamenu.slide_speed);
-            } else {
-                anchor.siblings('.mega-sub-menu').show();
+            anchor.parent().addClass('mega-toggle-on').triggerHandler("open_panel");
+
+            var effect = megamenu.effect[menu.settings.effect]['in'];
+
+            if (effect.css) {
+                anchor.siblings('.mega-sub-menu').css(effect.css);
+            }
+
+            if (effect.animate) {
+                anchor.siblings('.mega-sub-menu').animate(effect.animate, 'fast', 'swing', function() {
+                    $(this).css('display', 'block');
+                });
             }
         }
 
@@ -67,7 +89,7 @@
                         e.preventDefault();
 
                         if ( $(this).parent().hasClass("mega-toggle-on") ) {
-                            hidePanel($(this));                            
+                            hidePanel($(this), false);                            
                         } else {
                             showPanel($(this));
                         }
@@ -83,7 +105,9 @@
                     showPanel($(this).children('a'));
                 },
                 out: function () {
-                    hidePanel($(this).children('a'));
+                    if ($(this).hasClass("mega-toggle-on")) {
+                        hidePanel($(this).children('a'), false);
+                    }
                 },
                 timeout: megamenu.timeout
             });

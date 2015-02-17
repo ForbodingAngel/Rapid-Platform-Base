@@ -1,7 +1,7 @@
 /*
 Theme Name: Rapid Platform Base
 Theme URI: http://underscores.me/
-Author: IT-Magique / Ben Woods (for Cohesive Business Solutions - www.becohesive.com)
+Author: IT-Magique / Ben Woods
 Author URI: http://underscores.me/
 Description: Base Theme for Rapid Platform
 Version: 1.0.0
@@ -162,6 +162,8 @@ and Blueprint http://www.blueprintcss.org/
 /*--------------------------------------------------------------
 0.5 Site Colors and Padding
 --------------------------------------------------------------*/
+/* ALL OF THIS CAN BE DONE USING THE THEME CUSTOMIZATION OPTIONS NOW! USE THAT! */
+
 /*
 body {
 	background-color: #ccc;
@@ -208,8 +210,25 @@ body {
 0.9 Site Fixes
 --------------------------------------------------------------*/
 
+/* Contact form 7 fix */
+.ajax-loader {
+	width: auto !important;
+}
+
 #mega-menu-wrap-primary-2 .mega-menu-toggle + label:after {
 	content: 'Menu';
+}
+
+.rsswidget img {
+	width: auto !important;
+}
+
+.widget_rss ul {
+	margin-left: 1em !important;
+}
+
+#content a {
+	word-break: break-all;
 }
 
 /*--------------------------------------------------------------

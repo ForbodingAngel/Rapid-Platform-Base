@@ -176,3 +176,5 @@ function maxMenu() {
     return wp_nav_menu( array( 'theme_location' => 'primary' ) );
 }
 add_shortcode('maxmenu', 'maxMenu');
+
+add_theme_support( 'post-thumbnails' ); 

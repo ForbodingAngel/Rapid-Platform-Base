@@ -3,7 +3,7 @@ Contributors: megamenu
 Tags: menu, mega menu, navigation, menu icons, menu style, responsive menu, megamenu, widget, dropdown menu, drag and drop, hover, click, responsive, retina, theme editor, widget, sidebar, icons, dashicons
 Requires at least: 3.8
 Tested up to: 4.1
-Stable tag: 1.5
+Stable tag: 1.5.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -20,15 +20,18 @@ Documentation & Demo: http://www.maxmegamenu.com
 Features:
 
 * Zero theme edits
-* Drag & drop widget editor 
-* 6 column panels (widgets can span multiple columns)
+* Drag & drop widget editor
+* Menu panels can be from 1-8 columns wide (widgets can span multiple columns)
 * Flyout (traditional) or Mega Menu menu styles
 * Menu Icons
+* Hide Text option
+* Disable Link option
+* Menu item align option (float links to right hand side of menu)
+* Sub menu align option
 * Activate Menu on either hover (intent) or click
 * Fade/Slide/None transitions
 * Compatible with touch screen devices
-* 3 'down' arrow icon styles
-* Built in theme editor with color picker
+* Built in theme editor
 * Works with multiple menus on the same page
 * Works with menus tagged to multiple Theme Locations
 * < 1kb JavaScript when gzipped (also works when JS is disabled)
@@ -55,13 +58,23 @@ Recommended Widgets:
 Translations:
 
 * Italian (thanks to aeco)
-* German (thanks to Thomas Meyer)
+* German (thanks to Thomas Meyer & dirk@d10n)
 
 Tested with the 20 most popular themes, all compatible with the exceptions of:
 
 * Tesla: compatible but requires edits: open header.php and remove the second call to wp_nav_menu (line 130 - 147)
 * Vantage: compatible (but hover only)
 * Stargazer: compatible (but hover only)
+
+== FAQ ==
+
+Getting started:
+
+http://www.maxmegamenu.com/documentation/
+
+Not working with your theme?
+
+http://www.maxmegamenu.com/documentation/removing-residual-styling/
 
 == Installation ==
 
@@ -80,6 +93,25 @@ See http://www.maxmegamenu.com for more screenshots
 5. Back end: Use the theme editor to change the appearance of your menus
 
 == Changelog ==
+
+= 1.5.3 =
+
+* Fix: Widget ordering bug when mega menu contains sub menu items (reported by & thanks to: milenasmart)
+* Misc: Add megamenu_save_menu_item_settings action
+
+= 1.5.2 =
+
+* Feature: Responsive menu text option in theme editor
+* Fix: Bug causing menu item to lose checkbox settings when saving mega menu state
+* Fix: Mobile menu items disappearing
+* Change: Refactor public js
+* Change: jQuery actions fired on panel open/close
+* Change: Tabify icon options
+* Change: Show 'up' icon when mobile sub menu is open
+* Change: Make animations filterable
+* Change: Add filter for SCSS and SCSS vars
+* Change: Add filter for menu item tabs
+* Update: Update german language files (thanks to dirk@d10n)
 
 = 1.5.1 =
 

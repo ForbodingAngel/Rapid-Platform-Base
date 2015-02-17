@@ -114,28 +114,35 @@ class Mega_Menu_Menu_Item_Manager {
 
         if ( $menu_item_id > 0 && is_array( $submitted_settings ) ) {
 
-        	$existing_settings = get_post_meta( $menu_item_id, '_megamenu', true);
+            // only check the checkbox values if the general settings form was submitted
+            if ( isset( $submitted_settings['item_align'] ) ) {
 
-            // Hide Text checkbox is unchecked
-            if ( ! isset( $submitted_settings['hide_text'] ) ) {
+                // Hide Text checkbox is unchecked
+                if ( ! isset( $submitted_settings['hide_text'] ) ) {
 
-                $submitted_settings['hide_text'] = 'false';
+                    $submitted_settings['hide_text'] = 'false';
+
+                }
+
+                // Disable Link checkbox is unchecked
+                if ( ! isset( $submitted_settings['disable_link'] ) ) {
+
+                    $submitted_settings['disable_link'] = 'false';
+
+                }
+
+                // Disable arrow checkbox is unchecked
+                if ( ! isset ( $submitted_settings['hide_arrow'] ) ) {
+
+                    $submitted_settings['hide_arrow'] = 'false';
+
+                }
 
             }
 
-            // Disable Link checkbox is unchecked
-            if ( ! isset( $submitted_settings['disable_link'] ) ) {
+            $submitted_settings = apply_filters( "megamenu_menu_item_submitted_settings", $submitted_settings, $menu_item_id );
 
-                $submitted_settings['disable_link'] = 'false';
-
-            }
-
-            // Disable arrow checkbox is unchecked
-            if ( ! isset ( $submitted_settings['hide_arrow'] ) ) {
-
-                $submitted_settings['hide_arrow'] = 'false';
-
-            }
+            $existing_settings = get_post_meta( $menu_item_id, '_megamenu', true);
 
         	if ( is_array( $existing_settings ) ) {
 
@@ -143,7 +150,9 @@ class Mega_Menu_Menu_Item_Manager {
 
         	}
         	
-        	update_post_meta( $_POST['menu_item_id'], '_megamenu', $submitted_settings );
+        	update_post_meta( $menu_item_id, '_megamenu', $submitted_settings );
+
+            do_action( "megamenu_save_menu_item_settings", $menu_item_id );
         	
         }
 
@@ -178,6 +187,8 @@ class Mega_Menu_Menu_Item_Manager {
 				'content' => $this->get_icon_content()
 			)
 		);
+
+        $tabs = apply_filters( "megamenu_tabs", $tabs, $this->menu_item_id, $this->menu_id, $this->menu_item_depth, $this->menu_item_meta );
 
 		wp_die( json_encode( $tabs ) );
 	}
@@ -432,10 +443,53 @@ class Mega_Menu_Menu_Item_Manager {
 	 */
 	private function get_icon_content() {
 
-		$return = "<form class='icon_selector'>";
 
-        $return .= "<div class='disabled'><input id='disabled' class='radio' type='radio' rel='disabled' name='settings[icon]' value='disabled' " . checked( $this->menu_item_meta['icon'], 'disabled', false ) . " />";
-        $return .= "<label for='disabled'></label></div>";
+        $tabs = array(
+            'dashicons' => array(
+                'title' => __("Dashicons", "megamenu"),
+                'active' => ! isset( $this->menu_item_meta['icon'] ) || ( isset( $this->menu_item_meta['icon'] ) && substr( $this->menu_item_meta['icon'], 0, strlen("dash") ) === "dash" || $this->menu_item_meta['icon'] == 'disabled' ),
+                'content' => $this->dashicon_selector()
+            )
+        );
+
+        $tabs = apply_filters( "megamenu_icon_tabs", $tabs, $this->menu_item_id, $this->menu_id, $this->menu_item_depth, $this->menu_item_meta );
+
+        $return = "<ul class='mm_tabs horizontal'>";
+
+        foreach ( $tabs as $id => $tab ) {
+
+            $active = $tab['active'] || count( $tabs ) === 1 ? "active" : "";
+
+            $return .= "<li rel='mm_tab_{$id}' class='{$active}'>" . esc_html( $tab['title'] ) . "</li>";
+
+        }
+
+        $return .= "</ul>";
+
+        foreach ($tabs as $id => $tab) {
+
+            $display = $tab['active'] ? "block" : "none";
+
+            $return .= "<div class='mm_tab_{$id}' style='display: {$display}'>" . $tab['content'] . "</div>";
+
+        }
+
+
+        return $return;
+
+	}
+
+    /**
+     * Return the form to select a dashicon
+     *
+     * @since 1.5.2
+     */
+    private function dashicon_selector() {
+
+        $return = "    <form class='icon_selector'>";
+
+        $return .= "        <div class='disabled'><input id='disabled' class='radio' type='radio' rel='disabled' name='settings[icon]' value='disabled' " . checked( $this->menu_item_meta['icon'], 'disabled', false ) . " />";
+        $return .= "        <label for='disabled'></label></div>";
 
         foreach ( $this->all_icons() as $code => $class ) {
 
@@ -445,18 +499,16 @@ class Mega_Menu_Menu_Item_Manager {
 
             $return .= "<div class='{$type}'>";
             $return .= "    <input class='radio' id='{$class}' type='radio' rel='{$code}' name='settings[icon]' value='{$class}' " . checked( $this->menu_item_meta['icon'], $class, false ) . " />";
-        	$return .= "    <label rel='{$code}' for='{$class}'></label>";
+            $return .= "    <label rel='{$code}' for='{$class}'></label>";
             $return .= "</div>";
         
         }
     
 
-        $return .= "</form>";
+        $return .= "    </form>";
 
         return $return;
-
-	}
-
+    }
 
     /**
      * List of all available DashIcon classes.
@@ -666,7 +718,7 @@ class Mega_Menu_Menu_Item_Manager {
             'dash-f328' => 'dashicons-smiley'
         );
 
-        $icons = apply_filters( "megamenu_icons", $icons );
+        $icons = apply_filters( "megamenu_dashicons", $icons );
 
         ksort( $icons );
 
