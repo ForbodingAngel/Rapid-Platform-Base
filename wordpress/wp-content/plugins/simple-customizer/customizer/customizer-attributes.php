@@ -1,4 +1,11 @@
 <?php
+/**
+ * Prevent direct access to files
+ */
+if ( ! defined( 'ABSPATH' ) ) {
+	die();
+}
+
 function simple_customize_attribute_font_family() {
 	global $simple_customize;
 

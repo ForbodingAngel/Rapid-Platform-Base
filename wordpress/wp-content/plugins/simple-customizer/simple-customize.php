@@ -3,7 +3,7 @@
  * Plugin Name: Simple Customizer
  * Plugin URI: http://www.clorith.net/wordpress-simple-customize/
  * Description: Customize the look of your themes without modifying any code, just point and click on the element you wish to change.
- * Version: 1.6
+ * Version: 1.6.2
  * Author: Clorith
  * Text Domain: simple-customize-plugin
  * Author URI: http://www.clorith.net
@@ -25,13 +25,17 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	die();
+}
+
 class simple_customize
 {
     /**
      * @var array $sections Used for storing our added sections before displaying them
      * @var array $settings The settings we wish to implement
      */
-	private $version   = "1.6";
+	private $version   = "1.6.2";
 	private $debug     = false;
     private $sections  = array();
     public $settings   = array();
@@ -365,54 +369,54 @@ class simple_customize
 		if ( isset( $_POST['simple-customize-import'] ) && ! empty( $_POST['simple-customize-import'] ) && check_admin_referer( 'simple-customize-import' ) )
 		{
 			//  Backwards compatible check for old import formats
-			if ( stristr( '{', $_POST['simple-customize-import'] ) && stristr( '[', $_POST['simple-customize-import'] ) ) {
-				$import = unserialize( base64_decode( $_POST['simple-customize-import'] ) );
+			if ( stristr( $_POST['simple-customize-import'], 'theme' ) ) {
+				$import = json_decode( wp_unslash( $_POST['simple-customize-import'] ) );
 			}
 			else {
-				$import = json_decode( $_POST['simple-customize-import'] );
+				$import = unserialize( base64_decode( wp_unslash( $_POST['simple-customize-import'] ) ) );
 			}
 
-			if ( ! empty( $import ) )
+			if ( isset( $import ) && ! empty( $import ) )
 			{
-				$theme = $import['theme'];
+				$theme = $import->theme;
 
-				foreach ( $import['fonts'] AS $font ) {
+				foreach ( $import->fonts AS $font ) {
 					$new_font = wp_insert_post(
 						array(
 							'post_type'   => 's-c-font',
-							'post_title'  => $font['name'],
-							'post_status' => $font['status']
+							'post_title'  => $font->name,
+							'post_status' => $font->status
 						)
 					);
 
-					update_post_meta( $new_font, '_simple_customize_font', $font['url'] );
+					update_post_meta( $new_font, '_simple_customize_font', $font->url );
 				}
 
-				foreach ( $import['categories'] AS $category ) {
+				foreach ( $import->categories AS $category ) {
 					wp_insert_term(
-						$category['name'],
+						$category->name,
 						'simple-customize',
 						array(
-							'slug' => $category['slug']
+							'slug' => $category->slug
 						)
 					);
 				}
-				foreach ( $import['options'] AS $customize ) {
+				foreach ( $import->options AS $customize ) {
 					$new = wp_insert_post(
 						array(
 							'post_type'   => 'simple-customize',
-							'post_title'  => $customize['name'],
+							'post_title'  => $customize->name,
 							'post_status' => 'publish'
 						)
 					);
 
-					update_post_meta( $new, '_simple_customize_selector', $customize['selector'] );
-					update_post_meta( $new, '_simple_customize_attribute', $customize['attribute'] );
-					update_post_meta( $new, '_simple_customize_default', $customize['default'] );
-					update_post_meta( $new, '_simple_customize_category', $customize['category'] );
+					update_post_meta( $new, '_simple_customize_selector', $customize->selector );
+					update_post_meta( $new, '_simple_customize_attribute', $customize->attribute );
+					update_post_meta( $new, '_simple_customize_default', $customize->default );
+					update_post_meta( $new, '_simple_customize_category', $customize->category );
 					update_post_meta( $new, '_simple_customize_theme', $theme );
 
-					set_theme_mod( $new, $customize['value'] );
+					set_theme_mod( $new, $customize->value );
 				}
 			}
 		}
@@ -523,17 +527,16 @@ class simple_customize
 		// Wipe customizations for a theme
 		if ( isset( $_GET['clear'] ) && ! empty( $_GET['clear'] ) && check_admin_referer( 'simple-customize-clear-' . $_GET['clear'] ) )
 		{
-			$options    = get_option( 'simple_customize', array( $theme->stylesheet => array() ) );
-			$categories = get_option( 'simple_customize_category', array( $theme->stylesheet => array() ) );
-			$fonts      = get_option( 'simple_customize_fonts', array( $theme->stylesheet => array() ) );
+			$entries  = get_posts( array(
+				'posts_per_page' => - 1,
+				'post_type'      => 'simple-customize',
+				'meta_key'       => '_simple_customize_theme',
+				'meta_value'     => $_GET['clear']
+			) );
 
-			unset( $options[ $_GET['clear'] ] );
-			unset( $categories[ $_GET['clear'] ] );
-			unset( $fonts[ $_GET['clear'] ] );
-
-			update_option( 'simple_customize', $options );
-			update_option( 'simple_customize_category', $categories );
-			update_option( 'simple_customize_fonts', $fonts );
+			foreach ( $entries AS $entry ) {
+				wp_delete_post( $entry->ID, true );
+			}
 		}
 
 		// Save our settings page entries
@@ -890,8 +893,11 @@ class simple_customize
      *
      * @return string
      */
-    function generate_css( $force = false )
+    function generate_css( $force = false, $theme = null )
     {
+	    if ( empty( $theme ) ) {
+		    $theme = $this->theme->stylesheet;
+	    }
 	    if ( $force || false === ( $css = get_transient( 'simple-customize-css' ) ) ) {
 		    $settings = get_option( 'simple_customize_settings', array() );
 		    $css      = '';
@@ -899,7 +905,7 @@ class simple_customize
 			    'posts_per_page' => - 1,
 			    'post_type'      => 'simple-customize',
 			    'meta_key'       => '_simple_customize_theme',
-			    'meta_value'     => $this->theme->stylesheet
+			    'meta_value'     => $theme
 		    ) );
 
 		    foreach ( $entries AS $entry ) {

@@ -1074,30 +1074,21 @@ object {
 
 #social-media  ul li {
 	display: inline;
-	margin-left: 4.25%;
-	margin-right: 4.25%;
+	margin-left: 3%;
+	margin-right: 3%;
 }
 
 #social-media {
-    
     display: block;
-	
-    /* float: left; */
-    
-    
-    /* width: 100%; */
     margin-top: 0px;
     padding-top: 10px;
-    /* margin-left: -50px; */
-    /* padding-left: 50px; */
-    /* margin-right: -50px; */
-    /* padding-right: 50px; */
     margin-bottom: 20px;
     padding-bottom: 10px;
-
+	font-size: 32px;
+	text-align: center;
 }
 
-#social-media img {
+#social-media  .fa  {
 
 	-webkit-transition: all 0.2s ease-in-out;
     -moz-transition: all 0.2s ease-in-out;
@@ -1107,6 +1098,40 @@ object {
 
 }
 
-#social-media img:hover {
-	box-shadow: 0px 0px 50px #888888;
+#social-media  .fa:hover {
+	text-shadow: 0px 0px 50px #888888;
+}
+
+/* Service specific colorings */
+
+#social-media  .fa-google-plus:hover {
+	color: #db4936;
+}
+
+#social-media  .fa-facebook:hover {
+	color: #607db7;
+}
+
+#social-media  .fa-twitter:hover {
+	color: #00aced;
+}
+
+#social-media  .fa-linkedin:hover {
+	color: #016088;
+}
+
+#social-media  .fa-stumbleupon:hover {
+	color: #ee4316;
+}
+
+#social-media  .fa-delicious:hover {
+	color: #abb3cc;
+}
+
+#social-media  .fa-digg:hover {
+	color: #4e7da9;
+}
+
+#social-media  .fa-reddit:hover {
+	color: #f0490d;
 }

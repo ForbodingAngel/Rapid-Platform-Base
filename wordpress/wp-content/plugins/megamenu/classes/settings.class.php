@@ -107,7 +107,7 @@ class Mega_Menu_Settings{
 
         check_admin_referer( 'megamenu_clear_cache' );
 
-        delete_site_transient( 'megamenu_css' );
+        delete_transient( 'megamenu_css' );
 
         wp_redirect( admin_url( "themes.php?page=megamenu_settings&tab=tools&clear_cache=true" ) );
 
@@ -124,7 +124,7 @@ class Mega_Menu_Settings{
         check_admin_referer( 'megamenu_delete_data' );
 
         // delete menu settings
-        delete_site_option("megamenu_settings");
+        delete_option("megamenu_settings");
 
         // delete all widgets assigned to menus
         $widget_manager = new Mega_Menu_Widget_Manager();
@@ -143,7 +143,7 @@ class Mega_Menu_Settings{
         delete_metadata( 'post', 0, '_megamenu', '', true );
 
         // clear cache
-        delete_site_transient( "megamenu_css" );
+        delete_transient( "megamenu_css" );
 
         // delete custom themes
         delete_site_option( "megamenu_themes" );
@@ -169,17 +169,17 @@ class Mega_Menu_Settings{
 
         }
 
-        if ( ! get_site_option( 'megamenu_settings' ) ) {
+        if ( ! get_option( 'megamenu_settings' ) ) {
 
-            add_site_option( 'megamenu_settings', $submitted_settings );
+            add_option( 'megamenu_settings', $submitted_settings );
 
         } else {
 
-            $existing_settings = get_site_option( 'megamenu_settings' );
+            $existing_settings = get_option( 'megamenu_settings' );
 
             $new_settings = array_merge( $existing_settings, $submitted_settings );
  
-            update_site_option( 'megamenu_settings', $new_settings );
+            update_option( 'megamenu_settings', $new_settings );
 
         }
 
@@ -355,7 +355,7 @@ class Mega_Menu_Settings{
      * @param string $theme
      */
     public function theme_is_being_used_by_menu( $theme ) {
-        $settings = get_site_option( "megamenu_settings" );
+        $settings = get_option( "megamenu_settings" );
 
         if ( ! $settings ) {
             return false;
@@ -447,7 +447,7 @@ class Mega_Menu_Settings{
      */
     public function getting_started_page_is_enabled() {
 
-        $saved_settings = get_site_option( "megamenu_settings" );
+        $saved_settings = get_option( "megamenu_settings" );
 
         if ( ! isset( $saved_settings['getting_started'] ) ) {
             return true;
@@ -468,7 +468,7 @@ class Mega_Menu_Settings{
      */
     public function settings_page() {
 
-        $saved_settings = get_site_option( "megamenu_settings" );
+        $saved_settings = get_option( "megamenu_settings" );
 
         $css = isset( $saved_settings['css'] ) ? $saved_settings['css'] : 'ajax';
 
@@ -798,39 +798,29 @@ class Mega_Menu_Settings{
                     </tr>
                     <tr>
                         <td class='mega-name'>
-                            <?php _e("Arrow Up", "megamenu"); ?>
+                            <?php _e("Arrow", "megamenu"); ?>
                             <div class='mega-description'>
-                                <?php _e("Select the 'Up' arrow style.", "megamenu"); ?>
+                                <?php _e("Select the arrow styles.", "megamenu"); ?>
                             </div>
                         </td>
-                        <td class='mega-value'><?php $this->print_theme_arrow_option( 'arrow_up' ); ?></td>
-                    </tr>
-                    <tr>
-                        <td class='mega-name'>
-                            <?php _e("Arrow Down", "megamenu"); ?>
-                            <div class='mega-description'>
-                                <?php _e("Select the 'Down' arrow style.", "megamenu"); ?>
-                            </div>
+                        <td class='mega-value'>
+                            <label>
+                                <span class='mega-short-desc'><?php _e("Up", "megamenu"); ?></span>
+                                <?php $this->print_theme_arrow_option( 'arrow_up' ); ?>
+                            </label>
+                            <label>
+                                <span class='mega-short-desc'><?php _e("Down", "megamenu"); ?></span>
+                                <?php $this->print_theme_arrow_option( 'arrow_down' ); ?>
+                            </label>
+                            <label>
+                                <span class='mega-short-desc'><?php _e("Left", "megamenu"); ?></span>
+                                <?php $this->print_theme_arrow_option( 'arrow_left' ); ?>
+                            </label>
+                            <label>
+                                <span class='mega-short-desc'><?php _e("Right", "megamenu"); ?></span>
+                                <?php $this->print_theme_arrow_option( 'arrow_right' ); ?>
+                            </label>
                         </td>
-                        <td class='mega-value'><?php $this->print_theme_arrow_option( 'arrow_down' ); ?></td>
-                    </tr>
-                    <tr>
-                        <td class='mega-name'>
-                            <?php _e("Arrow Left", "megamenu"); ?>
-                            <div class='mega-description'>
-                                <?php _e("Select the 'Left' arrow style.", "megamenu"); ?>
-                            </div>
-                        </td>
-                        <td class='mega-value'><?php $this->print_theme_arrow_option( 'arrow_left' ); ?></td>
-                    </tr>
-                    <tr>
-                        <td class='mega-name'>
-                            <?php _e("Arrow Right", "megamenu"); ?>
-                            <div class='mega-description'>
-                                <?php _e("Select the 'Right' arrow style.", "megamenu"); ?>
-                            </div>
-                        </td>
-                        <td class='mega-value'><?php $this->print_theme_arrow_option( 'arrow_right' ); ?></td>
                     </tr>
                     <tr>
                         <td class='mega-name'>
@@ -1027,10 +1017,28 @@ class Mega_Menu_Settings{
                             </div>
                         </td>
                         <td class='mega-value'>
-                            <?php $this->print_theme_color_option( 'menu_item_link_color' ); ?>
-                            <?php $this->print_theme_freetext_option( 'menu_item_link_font_size' ); ?>
-                            <?php $this->print_theme_font_option( 'menu_item_link_font' ); ?>
-                            <?php $this->print_theme_weight_option( 'menu_item_link_weight' ); ?>
+                            <label>
+                                <span class='mega-short-desc'><?php _e("Color", "megamenu"); ?></span>
+                                <?php $this->print_theme_color_option( 'menu_item_link_color' ); ?>
+                            </label>
+                            <label>
+                                <span class='mega-short-desc'><?php _e("Size", "megamenu"); ?></span>
+                                <?php $this->print_theme_freetext_option( 'menu_item_link_font_size' ); ?>
+                            </label>
+                            <label>
+                                <span class='mega-short-desc'><?php _e("Family", "megamenu"); ?></span>
+                                <?php $this->print_theme_font_option( 'menu_item_link_font' ); ?>
+                            </label>
+                            <label>
+                                <span class='mega-short-desc'><?php _e("Weight", "megamenu"); ?></span>
+                                <?php $this->print_theme_weight_option( 'menu_item_link_weight' ); ?>
+                            </label>
+                            <label>
+                                <span class='mega-short-desc'><?php _e("Transform", "megamenu"); ?></span>
+                                <?php $this->print_theme_transform_option( 'menu_item_link_text_transform' ); ?>
+                            </label>
+
+
                         </td>
                     </tr>
                     <tr>
@@ -1041,19 +1049,14 @@ class Mega_Menu_Settings{
                             </div>
                         </td>
                         <td class='mega-value'>
-                            <?php $this->print_theme_color_option( 'menu_item_link_color_hover' ); ?>
-                            <?php $this->print_theme_weight_option( 'menu_item_link_weight_hover' ); ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class='mega-name'>
-                            <?php _e("Text Transform", "megamenu"); ?>
-                            <div class='mega-description'>
-                                <?php _e("Set the padding for the headings. Use this to set the gap between the widget heading and the widget content.", "megamenu"); ?>
-                            </div>
-                        </td>
-                        <td class='mega-value'>
-                            <?php $this->print_theme_transform_option( 'menu_item_link_text_transform' ); ?>
+                            <label>
+                                <span class='mega-short-desc'><?php _e("Color", "megamenu"); ?></span>
+                                <?php $this->print_theme_color_option( 'menu_item_link_color_hover' ); ?>
+                            </label>
+                            <label>
+                                <span class='mega-short-desc'><?php _e("Weight", "megamenu"); ?></span>
+                                <?php $this->print_theme_weight_option( 'menu_item_link_weight_hover' ); ?>
+                            </label>
                         </td>
                     </tr>
                     <tr>
@@ -1258,21 +1261,26 @@ class Mega_Menu_Settings{
                             </div>
                         </td>
                         <td class='mega-value'>
-                            <?php $this->print_theme_color_option( 'panel_header_color' ); ?>
-                            <?php $this->print_theme_freetext_option( 'panel_header_font_size' ); ?>
-                            <?php $this->print_theme_font_option( 'panel_header_font' ); ?>
-                            <?php $this->print_theme_weight_option( 'panel_header_font_weight' ); ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class='mega-name'>
-                            <?php _e("Heading Text Transform", "megamenu"); ?>
-                            <div class='mega-description'>
-                                <?php _e("Set the text transform style for the Widget Headers and second level menu items.", "megamenu"); ?>
-                            </div>
-                        </td>
-                        <td class='mega-value'>
-                            <?php $this->print_theme_transform_option( 'panel_header_text_transform' ); ?>
+                            <label>
+                                <span class='mega-short-desc'><?php _e("Color", "megamenu"); ?></span>
+                                <?php $this->print_theme_color_option( 'panel_header_color' ); ?>
+                            </label>
+                            <label>
+                                <span class='mega-short-desc'><?php _e("Size", "megamenu"); ?></span>
+                                <?php $this->print_theme_freetext_option( 'panel_header_font_size' ); ?>
+                            </label>
+                            <label>
+                                <span class='mega-short-desc'><?php _e("Family", "megamenu"); ?></span>
+                                <?php $this->print_theme_font_option( 'panel_header_font' ); ?>
+                            </label>
+                            <label>
+                                <span class='mega-short-desc'><?php _e("Weight", "megamenu"); ?></span>
+                                <?php $this->print_theme_weight_option( 'panel_header_font_weight' ); ?>
+                            </label>
+                            <label>
+                                <span class='mega-short-desc'><?php _e("Transform", "megamenu"); ?></span>
+                                <?php $this->print_theme_transform_option( 'panel_header_text_transform' ); ?>
+                            </label>
                         </td>
                     </tr>
                     <tr>

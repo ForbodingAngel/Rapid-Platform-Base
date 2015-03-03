@@ -1,4 +1,11 @@
 <?php
+/**
+ * Prevent direct access to files
+ */
+if ( ! defined( 'ABSPATH' ) ) {
+	die();
+}
+
 	global $simple_customize;
 	$settings = get_option( 'simple_customize_settings', array() );
 	$customize_classes = array( 'simple-customize' );

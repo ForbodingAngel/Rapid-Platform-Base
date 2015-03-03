@@ -6,7 +6,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: theme, customization, customisation, css, design
 Requires at least: 3.4
 Tested up to: 4.1
-Stable tag: 1.6
+Stable tag: 1.6.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -62,6 +62,15 @@ Styling your site is never an easy task, and to give you the best possible tools
 
 
 == Changelog ==
+
+= 1.6.2 =
+* Updated the style clearing option to also clear the newly added format for customization storage
+* Streamlined the uninstall procedure when removing the plugin
+* Added some missing checks to prevent direct loading of files
+* Fixed problem with exporting as CSS when picking a theme that isn't currently active
+
+= 1.6.1 =
+* Fix for imports using the new format some times failing due to auto-generated slashes
 
 = 1.6 =
 * Made the customizer attribute cases extendible

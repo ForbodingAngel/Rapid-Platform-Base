@@ -28,11 +28,6 @@
 	) );
 	foreach( $entries AS $entry )
 	{
-		delete_post_meta( $entry->ID, '_simple_customize_selector' );
-		delete_post_meta( $entry->ID, '_simple_customize_attribute' );
-		delete_post_meta( $entry->ID, '_simple_customize_default' );
-		delete_post_meta( $entry->ID, '_simple_customize_category' );
-		delete_post_meta( $entry->ID, '_simple_customize_theme' );
 		wp_delete_post( $entry->ID );
 	}
 
@@ -45,6 +40,5 @@
 
 	foreach( $fonts AS $font )
 	{
-		delete_post_meta( $font->ID, '_simple_customize_font' );
 		wp_delete_post( $font->ID );
 	}

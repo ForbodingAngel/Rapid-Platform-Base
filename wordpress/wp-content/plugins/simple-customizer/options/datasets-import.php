@@ -1,3 +1,12 @@
+<?php
+/**
+ * Prevent direct access to files
+ */
+if ( ! defined( 'ABSPATH' ) ) {
+	die();
+}
+?>
+
 <?php if ( ! isset( $_GET['export'] ) ) { ?>
 <form action="<?php echo admin_url( 'themes.php?page=simple-customize&tab=datasets' ); ?>" method="post">
 	<h3><?php _e( 'Import customizations', 'simple-customize-plugin' ); ?></h3>

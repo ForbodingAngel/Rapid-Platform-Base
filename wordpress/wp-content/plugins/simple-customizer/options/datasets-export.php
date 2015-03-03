@@ -1,8 +1,16 @@
 <?php
+/**
+ * Prevent direct access to files
+ */
+if ( ! defined( 'ABSPATH' ) ) {
+	die();
+}
+
+
 if ( isset( $_GET['export'] ) )
 {
 	if ( isset( $_GET['css'] ) ) {
-		$export = $simple_customize->generate_css();
+		$export = $simple_customize->generate_css( true, $_GET['export'] );
 	}
 	else {
 		$export = array(

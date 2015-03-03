@@ -48,19 +48,32 @@ do_action( 'simple-customize-options-before-datasets' );
 		foreach( $entries AS $entry )
 		{
 			$theme = wp_get_theme ( $entry->meta_value );
-			echo '
+			$dataset_line = '';
+
+
+			$dataset_line .= '
 				<tr>
-					<td>' . $theme->Name . '</td>
-					<td>' . $theme->Author . '</td>
+					<td>' . apply_filters( 'simple-customzier-datasets-list-item-name', $theme->Name ) . '</td>
+					<td>' . apply_filters( 'simple-customizer-datasets-list-item-author', $theme->Author ) . '</td>
 					<td>
+			';
+
+			$dataset_actions = '
 						<a href="' . wp_nonce_url( 'themes.php?page=simple-customize&tab=datasets&clear=' . $entry->meta_value, 'simple-customize-clear-' . $entry->meta_value ) . '">' . __( 'Delete stylings', 'simple-customize-plugin' ) . '</a>
 						 |
 						<a href="' . admin_url( 'themes.php?page=simple-customize&tab=datasets&export=' . $entry->meta_value ) . '">' . __( 'Export customizations', 'simple-customize-plugin' ) . '</a>
 						 |
 						<a href="' . admin_url( 'themes.php?page=simple-customize&tab=datasets&export=' . $entry->meta_value . '&css=true' ) . '">' . __( 'Export CSS', 'simple-customize-plugin' ) . '</a>
+			';
+
+			$dataset_line .= apply_filters( 'simple-customizer-datasets-list-item-actions', $dataset_actions );
+
+			$dataset_line .= '
 					</td>
 				</tr>
 			';
+
+			echo apply_filters( 'simple-customizer-datasets-list-item', $dataset_line );
 		}
 	?>
 	</tbody>

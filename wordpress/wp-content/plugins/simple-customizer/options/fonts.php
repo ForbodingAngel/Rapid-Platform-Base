@@ -85,6 +85,8 @@ do_action( 'simple-customize-options-before-fonts' );
 		'post_status'    => array( 'draft', 'publish' )
 	) );
 
+	$fonts = apply_filters( 'simple-customizer-font-list', $fonts );
+
 	foreach( $fonts AS $font )
 	{
 		?>

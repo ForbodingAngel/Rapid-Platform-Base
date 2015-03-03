@@ -71,6 +71,8 @@ do_action( 'simple-customize-options-before-home' );
 								)
 							);
 
+							$terms = apply_filters( 'simple-customizer-terms-list', $terms );
+
 							foreach( $terms AS $term )
 							{
 								echo '<option value="' . sanitize_title( $term->slug ) . '">' . $term->name . '</option>';
@@ -138,13 +140,6 @@ do_action( 'simple-customize-options-before-home' );
 						</optgroup>
 						<optgroup label="<?php _e( 'Your categories', 'simple-customize-plugin' ); ?>">
 							<?php
-								$terms = get_terms(
-									'simple-customize',
-									array(
-										'hide_empty' => false
-									)
-								);
-
 								foreach( $terms AS $term )
 								{
 									echo '<option value="' . sanitize_title( $term->slug ) . '">' . $term->name . '</option>';
@@ -217,6 +212,8 @@ do_action( 'simple-customize-options-before-home' );
 		'meta_key'       => '_simple_customize_theme',
 		'meta_value'     => $simple_customize->theme->stylesheet
 	) );
+
+	$entries = apply_filters( 'simple-customizer-entry-list', $entries );
 
 	foreach( $entries AS $entry )
 	{
@@ -294,14 +291,6 @@ do_action( 'simple-customize-options-before-home' );
 
 	<tbody id="the-list">
 	<?php
-
-	$terms = get_terms(
-		'simple-customize',
-		array(
-			'hide_empty' => false
-		)
-	);
-
 	foreach( $terms AS $term )
 	{
 	?>

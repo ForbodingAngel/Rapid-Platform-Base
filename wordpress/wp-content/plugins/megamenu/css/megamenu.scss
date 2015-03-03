@@ -85,6 +85,7 @@
 	visibility: visible;
 	overflow: visible;
 	display: block;
+	min-height: 0;
 	-webkit-transition: none;
 	-moz-transition: none;
 	-o-transition: none;
@@ -116,16 +117,13 @@
 }
 
 #{$wrap} {
+	z-index: $z_index;
     @include background($container_background_from, $container_background_to);
     @include border-radius($container_border_radius_top_left, $container_border_radius_top_right, $container_border_radius_bottom_right, $container_border_radius_bottom_left);
 
 	#{$menu} {
 
 	    padding: $container_padding_top $container_padding_right $container_padding_bottom $container_padding_left;
-
-	    .mega-menu-clear {
-			clear: left;
-		}
 
 		p {
 			margin-bottom: 10px;
@@ -251,7 +249,6 @@
 		    padding: $panel_padding_top $panel_padding_right $panel_padding_bottom $panel_padding_left;
 		    position: absolute;
 		    width: $panel_width;
-		    z-index: $z_index;
 		    border-top: $panel_border_top solid $panel_border_color;
 		    border-left: $panel_border_left solid $panel_border_color;
 		    border-right: $panel_border_right solid $panel_border_color;
@@ -307,8 +304,13 @@
 			    font-size: $font_size;
 			    display: block;
 			    float: left;
+			    clear: none;
 			    padding: $panel_widget_padding_top $panel_widget_padding_right $panel_widget_padding_bottom $panel_widget_padding_left;
 			    vertical-align: top;
+
+			    &.mega-menu-clear {
+					clear: left;
+				}
 
 			    > a,
 			    > h4.mega-block-title {
@@ -324,7 +326,6 @@
 			display: none;
 		    position: absolute;
 		    width: auto;
-		    z-index: 999;
 		    width: $flyout_width;
 		    border-top: $flyout_border_top solid $flyout_border_color;
 		    border-left: $flyout_border_left solid $flyout_border_color;
@@ -487,7 +488,6 @@
 			float: right;
 			cursor: pointer;
 			position: relative;
-			z-index: 1;
 			display: none;
 			width: 100%;
 			text-align: right;
