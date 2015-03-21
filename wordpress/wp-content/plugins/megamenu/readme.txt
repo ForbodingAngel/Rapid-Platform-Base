@@ -3,7 +3,7 @@ Contributors: megamenu
 Tags: menu, mega menu, navigation, menu icons, menu style, responsive menu, megamenu, widget, dropdown menu, drag and drop, hover, click, responsive, retina, theme editor, widget, sidebar, icons, dashicons
 Requires at least: 3.8
 Tested up to: 4.1
-Stable tag: 1.5.3
+Stable tag: 1.6-beta
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -93,6 +93,11 @@ See http://www.maxmegamenu.com for more screenshots
 5. Back end: Use the theme editor to change the appearance of your menus
 
 == Changelog ==
+
+= 1.6 =
+
+* Fix: responsive collapse menu
+* Fix: checkbox appearing on Enfold theme
 
 = 1.6-beta =
 

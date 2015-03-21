@@ -54,7 +54,6 @@ and Blueprint http://www.blueprintcss.org/
 --------------------------------------------------------------*/
 
 @import url(http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700);
-@import url("site-specific-styles.css");
 
 /*--------------------------------------------------------------
 0.0 Layout Options
@@ -95,12 +94,6 @@ and Blueprint http://www.blueprintcss.org/
 .header-sidebar-container {
 }
 
-.header-sidebar-container .rp-column img {
-	width: auto !important;
-	max-width: auto !important;
-	min-width: auto !important;
-}
-
 @media screen and (max-width: 800px) {
 	.header-sidebar-container .rp-column {
 		text-align: center;
@@ -115,7 +108,7 @@ and Blueprint http://www.blueprintcss.org/
 /** Only use this if the menu is in a sidebar **/
 /** Sidebar menu must be put in the sidebar-maxmenu-widget class to be displayed vertically, so wrap the menu in a div **/
 
-.sidebar-maxmenu-widget #mega-menu-wrap-primary-2 #mega-menu-primary-2 li {
+.sidebar-maxmenu-widget #mega-menu-wrap-primary #mega-menu-primary li {
   border-bottom: 1px dashed #404040;
   font-family: Oswald;
   display: block !important;
@@ -215,8 +208,8 @@ body {
 	width: auto !important;
 }
 
-#mega-menu-wrap-primary-2 .mega-menu-toggle + label:after {
-	content: 'Menu';
+#mega-menu-wrap-primary .mega-menu-toggle + label:after {
+	content: 'Menu' !important;
 }
 
 .rsswidget img {
@@ -229,6 +222,67 @@ body {
 
 #content a {
 	word-break: break-all;
+}
+
+#mega-menu-wrap-primary input[type="checkbox"].mega-menu-toggle + label {
+	margin-top: -15px !important;
+}
+#mega-menu-wrap-primary #mega-menu-primary {
+  margin-top: -13px !important;
+}
+
+#mega-menu-wrap-primary input[type="checkbox"].mega-menu-toggle {
+  display: block !important;
+  visibility: hidden !important;
+  position: relative !important;
+  top: 20px !important;
+}
+
+#toc_container {
+	float: right;
+	min-width: 250px;
+	max-width: 300px;
+}
+
+@media screen and (max-width: 800px) {
+	#toc_container {
+		float: none;
+		margin: auto;
+		min-width: 250px;
+		width: 100% !important;
+		max-width: none;
+	}
+}
+
+/* Responsive Embeds */
+
+.embed-container { 
+	position: relative;
+	padding-bottom: 56.25%;
+	height: 0; overflow: hidden; 
+	max-width: 100%; 
+} 
+
+.embed-container iframe, .embed-container object, .embed-container embed { 
+	position: absolute; 
+	top: 0; 
+	left: 0; 
+	width: 100%; 
+	height: 100%; 
+}
+
+
+/* Rapid Platform Fixes */
+
+@media screen and (max-width: 800px) {
+	div.rp-column {
+		float: none;
+		text-align: justify;
+		width: 100% !important;
+		margin-top: 20px;
+		margin-right: 0px !important;
+		margin-left: 0px !important;
+	}
 }
 
 /*--------------------------------------------------------------
@@ -1029,38 +1083,6 @@ object {
 
 .gallery-caption {
 	display: block;
-}
-
-
-/* Responsive Embeds */
-
-.embed-container { 
-	position: relative;
-	padding-bottom: 56.25%;
-	height: 0; overflow: hidden; 
-	max-width: 100%; 
-} 
-
-.embed-container iframe, .embed-container object, .embed-container embed { 
-	position: absolute; 
-	top: 0; 
-	left: 0; 
-	width: 100%; 
-	height: 100%; 
-}
-
-
-/* Rapid Platform Fixes */
-
-@media screen and (max-width: 800px) {
-	div.rp-column {
-		float: none;
-		text-align: justify;
-		width: 100% !important;
-		margin-top: 20px;
-		margin-right: 0px !important;
-		margin-left: 0px !important;
-	}
 }
 
 /* =Social Media Buttons
