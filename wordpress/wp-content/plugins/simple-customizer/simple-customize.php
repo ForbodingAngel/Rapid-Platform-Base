@@ -3,7 +3,7 @@
  * Plugin Name: Simple Customizer
  * Plugin URI: http://www.clorith.net/wordpress-simple-customize/
  * Description: Customize the look of your themes without modifying any code, just point and click on the element you wish to change.
- * Version: 1.6.2
+ * Version: 1.6.4
  * Author: Clorith
  * Text Domain: simple-customize-plugin
  * Author URI: http://www.clorith.net
@@ -35,7 +35,7 @@ class simple_customize
      * @var array $sections Used for storing our added sections before displaying them
      * @var array $settings The settings we wish to implement
      */
-	private $version   = "1.6.2";
+	private $version   = "1.6.4";
 	private $debug     = false;
     private $sections  = array();
     public $settings   = array();
@@ -51,7 +51,8 @@ class simple_customize
 	public $attribute  = array();
 
 	private $google    = array(
-		'apikey' => 'AIzaSyATN_Or4kCIaz0WspR7qq875n_FXSXyeq4'
+		'apikey'   => 'AIzaSyATN_Or4kCIaz0WspR7qq875n_FXSXyeq4',
+		'font_url' => '//fonts.googleapis.com/css?family='
 	);
 
     /**
@@ -806,7 +807,7 @@ class simple_customize
 	    ) );
 
 	    foreach( $fonts AS $font ) {
-		    $font_url = get_post_meta( $font->ID, '_simple_customize_font', true );
+		    $font_url = esc_url_raw( $this->google['font_url'] . str_replace( ' ', '+', $font->post_title ) );
 		    wp_enqueue_style( 'font-' . sanitize_title( $font->post_title ), $font_url, false, $this->version );
 	    }
 
@@ -965,15 +966,23 @@ class simple_customize
     {
         echo 'jQuery(document).ready(function ($) {';
 
-        foreach( $this->settings AS $setting )
-        {
-	        if ( 'controller' == $setting['type'] ) {
-		        continue;
-	        }
+	    $entries = get_posts( array(
+		    'posts_per_page' => -1,
+		    'post_type'      => 'simple-customize',
+		    'meta_key'       => '_simple_customize_theme',
+		    'meta_value'     => $this->theme->stylesheet
+	    ) );
+
+	    $entries = apply_filters( 'simple-customizer-entry-list', $entries );
+
+	    foreach( $entries AS $entry )
+	    {
+		    $meta = get_post_meta( $entry->ID );
+
             echo "
-                wp.customize( '" . $setting['name'] . "', function( value ) {
+                wp.customize( '" . $entry->ID . "', function( value ) {
                     value.bind( function( newval ) {
-                        $('" . $setting['object'] . "').css('" . $setting['selector'] . "', newval );
+                        $('" . $meta['_simple_customize_selector'][0] . "').css('" . $meta['_simple_customize_attribute'][0] . "', newval );
                     } );
                 } );
                 \n\n

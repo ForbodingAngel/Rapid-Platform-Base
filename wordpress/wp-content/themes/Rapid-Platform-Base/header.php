@@ -16,6 +16,15 @@
 <link rel="profile" href="http://gmpg.org/xfn/11">
 <link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>">
 
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" ></script> 
+
+<script src="<?php echo get_template_directory_uri(); ?>/js/jquery.sticky.js"></script>
+<script>
+    $(window).load(function(){
+      $(".stickynav").sticky({ topSpacing: 0 });
+    });
+</script>
+
 <?php wp_head(); ?>
 </head>
 

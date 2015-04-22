@@ -208,10 +208,6 @@ body {
 	width: auto !important;
 }
 
-#mega-menu-wrap-primary .mega-menu-toggle + label:after {
-	content: 'Menu' !important;
-}
-
 .rsswidget img {
 	width: auto !important;
 }
@@ -224,9 +220,24 @@ body {
 	word-break: break-all;
 }
 
+
+/* Fixes for sticky top navigation bars */
+.is-sticky {
+  margin-left: -20px !important;
+}
+
+@media screen and (max-width: 800px) {
+	.stickynav {
+		display: block;
+		width: 100%;
+		max-width: 1000px;
+	}
+}
+
 #mega-menu-wrap-primary input[type="checkbox"].mega-menu-toggle + label {
 	margin-top: -15px !important;
 }
+
 #mega-menu-wrap-primary #mega-menu-primary {
   margin-top: -13px !important;
 }

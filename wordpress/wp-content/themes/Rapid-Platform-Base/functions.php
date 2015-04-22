@@ -178,3 +178,6 @@ function maxMenu() {
 add_shortcode('maxmenu', 'maxMenu');
 
 add_theme_support( 'post-thumbnails' ); 
+
+/* Remove wordpress theme and plugin editor */
+define( 'DISALLOW_FILE_EDIT', true );

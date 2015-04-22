@@ -6,7 +6,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: theme, customization, customisation, css, design
 Requires at least: 3.4
 Tested up to: 4.1
-Stable tag: 1.6.2
+Stable tag: 1.6.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -62,6 +62,12 @@ Styling your site is never an easy task, and to give you the best possible tools
 
 
 == Changelog ==
+
+= 1.6.4 =
+* Fixed Google Fonts not always being included like they should, resulting in default fonts being displayed
+
+= 1.6.3 =
+* Fixed live previewing of changes made
 
 = 1.6.2 =
 * Updated the style clearing option to also clear the newly added format for customization storage
@@ -160,4 +166,4 @@ Styling your site is never an easy task, and to give you the best possible tools
 
 == Upgrade notice ==
 
-Custom section fixes and improved flexibility for extensions
+Fix for Google fonts and live previews

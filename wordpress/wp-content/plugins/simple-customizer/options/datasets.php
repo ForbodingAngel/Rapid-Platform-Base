@@ -66,7 +66,7 @@ do_action( 'simple-customize-options-before-datasets' );
 						<a href="' . admin_url( 'themes.php?page=simple-customize&tab=datasets&export=' . $entry->meta_value . '&css=true' ) . '">' . __( 'Export CSS', 'simple-customize-plugin' ) . '</a>
 			';
 
-			$dataset_line .= apply_filters( 'simple-customizer-datasets-list-item-actions', $dataset_actions );
+			$dataset_line .= apply_filters( 'simple-customizer-datasets-list-item-actions', $dataset_actions, $entry );
 
 			$dataset_line .= '
 					</td>
