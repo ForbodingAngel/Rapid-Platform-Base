@@ -183,8 +183,7 @@ body {
 }
 
 #masthead {
-	padding-left: 20px;
-	padding-right: 20px;
+
 }
 #content {
 	padding-left: 20px;
@@ -220,10 +219,18 @@ body {
 	word-break: break-all;
 }
 
-
-/* Fixes for sticky top navigation bars */
-.is-sticky {
-  margin-left: -20px !important;
+.stickynav {
+	
+	/* UnComment these lines if you DO want the nav bar to stay within the page width when sticky */
+	max-width: 1000px;
+	/* UnComment these lines if you DO want the nav bar to stay within the page width when sticky */	
+	
+	/* UnComment out these lines if you DON'T want the nav bar to stay within the page width when sticky */
+	/* left: 0px; */
+	/* UnComment out these lines if you DON'T want the nav bar to stay within the page width when sticky */
+	
+	z-index: 999999;
+	width: 100%;
 }
 
 @media screen and (max-width: 800px) {
@@ -247,12 +254,6 @@ body {
   visibility: hidden !important;
   position: relative !important;
   top: 20px !important;
-}
-
-#toc_container {
-	float: right;
-	min-width: 250px;
-	max-width: 300px;
 }
 
 @media screen and (max-width: 800px) {
