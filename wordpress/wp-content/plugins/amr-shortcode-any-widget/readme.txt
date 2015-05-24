@@ -1,8 +1,8 @@
 === amr shortcode any widget ===
 Contributors: anmari
 Tags: shortcode, widget, page, templates, page template, widget_area, sidebar
-Tested up to: 4.0
-Version: 2.5
+Tested up to: 4.2
+Version: 2.6
 Stable tag: trunk
 
 == Description ==
@@ -190,6 +190,11 @@ More info on background: http://wordpress.org/support/topic/your-theme-your-side
 
 
 == Changelog ==
+= Version 2.5 =
+*  Tested on 4.2
+*  Removed from admin settings area the use of add_query_arg (unnecessary)
+*  Added esc_url to widget id 'debug' oage just in case (it is only accessed by logged in admin, but lets be safe and keep everyone happy if the see the add_query_arg and remove_query_arg
+
 = Version 2.5 =
 *  Tested on 4.1.1, Linked to the settings help page from the plugin action menu.
 *  Changed the readme a bit to try further aid understanding and reduce support issues

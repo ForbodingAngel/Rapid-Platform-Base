@@ -4,7 +4,7 @@ Plugin Name: amr shortcode any widget
 Plugin URI: http://webdesign.anmari.com/shortcode-any-widget/
 Description: Include any widget in a page for any theme.  [do_widget widgetname ] or  [do_widget "widget name" ] [do_widget id=widgetnamedashed-n ]or include a whole widget area [do_widget_area]. Please read: <a href="https://wordpress.org/plugins/amr-shortcode-any-widget/installation/">Installation</a> and <a href="https://wordpress.org/plugins/amr-shortcode-any-widget/faq/">FAQ</a>.
 Author: anmari
-Version: 2.5
+Version: 2.6
 Author URI: http://webdesign.anmari.com
 
 */
@@ -207,7 +207,7 @@ function shortcode_sidebar( $widget_id, $name="widgets_for_shortcode", $title=tr
 	 
 	/* lifted from wordpress code, keep as similar as possible for now */
 
-		if ( !isset($wp_registered_widgets[$widget_id]) ) continue;
+		if ( !isset($wp_registered_widgets[$widget_id]) ) return; // wp had continue
 
 		$params = array_merge(
 			array( 

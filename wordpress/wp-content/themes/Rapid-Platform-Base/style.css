@@ -219,6 +219,11 @@ body {
 	word-break: break-all;
 }
 
+/* Fix for ninjaforms inserting br tags all over the place */
+.ninja-forms-cont br {
+	display: none;
+}
+
 .stickynav {
 	
 	/* UnComment these lines if you DO want the nav bar to stay within the page width when sticky */
@@ -264,6 +269,40 @@ body {
 		width: 100% !important;
 		max-width: none;
 	}
+}
+
+/* Wordpress gallery column fixes */
+
+.gallery-columns-2 .gallery-item {
+	max-width: 48% !important;
+}
+
+.gallery-columns-3 .gallery-item {
+	max-width: 33% !important;
+}
+
+.gallery-columns-4 .gallery-item {
+	max-width: 24.5% !important;
+}
+
+.gallery-columns-5 .gallery-item {
+	max-width: 19.5% !important;
+}
+
+.gallery-columns-6 .gallery-item {
+	max-width: 16.2% !important;
+}
+
+.gallery-columns-7 .gallery-item {
+	max-width: 13.8% !important;
+}
+
+.gallery-columns-8 .gallery-item {
+	max-width: 12% !important;
+}
+
+.gallery-columns-8 .gallery-item {
+	max-width: 10.6% !important;
 }
 
 /* Responsive Embeds */
