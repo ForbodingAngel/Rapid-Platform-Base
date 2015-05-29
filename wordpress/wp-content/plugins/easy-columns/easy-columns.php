@@ -2,7 +2,7 @@
 /*
 Plugin Name: Easy Columns
 Plugin URI: http://www.patrickfriedl.com/
-Version: v2.1.3
+Version: v999
 Author: <a href="http://www.patrickfriedl.com">Pat Friedl</a>
 Description: Easy Columns provides the shortcodes to create a grid system or magazine style columns for laying out your pages just the way you need them.  Using shortcodes for 1/4, 1/2, 1/3, 2/3, 3/4, 1/5, 2/5, and 3/5 columns, you can insert <strong>at least thirty</strong> unique variations of columns on any page and even in posts! Quickly add columns to your pages from the editor with an easy to use "pick n' click" interface! For usage and more information, visit <a href="http://www.patrickfriedl.com" target="_blank">patrickfriedl.com</a>.
 

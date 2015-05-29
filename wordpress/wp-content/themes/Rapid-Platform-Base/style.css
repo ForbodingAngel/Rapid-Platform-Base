@@ -30,6 +30,7 @@ and Blueprint http://www.blueprintcss.org/
 	0.3 Footer Sidebar Widget
 	0.4 Footer Widget (Site-Info)
 	0.5 Site Colors and Padding
+	0.6 Call to Action
 	0.9 Site Fixes
 1.0 Reset
 2.0 Typography
@@ -199,6 +200,29 @@ body {
 }
 
 /*--------------------------------------------------------------
+0.6 Call to Action
+--------------------------------------------------------------*/
+
+/* Currently only one, could add more later */
+.ctabutton {
+	transition: all 0.5s ease;
+	color: #ffffff !important;
+	background-color: #e85805;
+	border-radius: 5px;
+	display: inline-block;
+	padding: 10px;
+}
+
+.ctabutton:hover {
+	background-color: #af4609;
+}
+
+.ctabutton a {
+	font-weight: bold;
+	color: #ffffff !important;
+}
+
+/*--------------------------------------------------------------
 0.9 Site Fixes
 --------------------------------------------------------------*/
 
@@ -244,6 +268,9 @@ body {
 		width: 100%;
 		max-width: 1000px;
 	}
+}
+#mega-menu-wrap-primary {
+	z-index: 999999;
 }
 
 #mega-menu-wrap-primary input[type="checkbox"].mega-menu-toggle + label {
@@ -333,6 +360,39 @@ body {
 		margin-top: 20px;
 		margin-right: 0px !important;
 		margin-left: 0px !important;
+	}
+}
+
+/* WP Easy Columns Responsive Fix */
+
+@media all and (max-width: 800px) {
+	.ezcol-one-quarter,
+	.ezcol-one-half,
+	.ezcol-three-quarter,
+	.ezcol-one-third,
+	.ezcol-two-third,
+	.ezcol-one-fifth,
+	.ezcol-two-fifth,
+	.ezcol-three-fifth,
+	.ezcol-four-fifth {
+		width: 100% !important;
+		margin-right: 0;
+	}
+	.ezcol-last {
+		float: left;
+		clear: none;
+		display: block;
+	}
+	.ezcol-last:after {
+		content: "";
+		display: block;
+		clear: none;
+	}
+	.ezcol-last + .ezcol-divider {
+		clear: none !important;
+		display: none !important;
+		margin: 0 !important;
+		padding: 0 !important;
 	}
 }
 

@@ -85,9 +85,27 @@ add_action( 'after_setup_theme', 'rapidtesting_setup' );
  */
 function rapidtesting_widgets_init() {
 	register_sidebar(array(
+    	'id' => 'header-menu-above',
+    	'name' => __('Menu Above Header', 'rapidtesting'),
+    	'description' => __('If you want the menu above the header, put it here'),
+    	'before_widget' => '<div id="%1$s" class="widget %2$s">',
+    	'after_widget' => '</div>',
+    	'before_title'  => '<h1 class="widget-title">',
+		'after_title'   => '</h1>',
+    ));
+	register_sidebar(array(
     	'id' => 'header-sidebar',
     	'name' => __('Site Header', 'rapidtesting'),
     	'description' => __('Site header goes here'),
+    	'before_widget' => '<div id="%1$s" class="widget %2$s">',
+    	'after_widget' => '</div>',
+    	'before_title'  => '<h1 class="widget-title">',
+		'after_title'   => '</h1>',
+    ));
+	register_sidebar(array(
+    	'id' => 'header-menu-below',
+    	'name' => __('Menu Below Header', 'rapidtesting'),
+    	'description' => __('If you want the menu below the header, put it here'),
     	'before_widget' => '<div id="%1$s" class="widget %2$s">',
     	'after_widget' => '</div>',
     	'before_title'  => '<h1 class="widget-title">',
@@ -171,6 +189,26 @@ function print_menu_shortcode($atts, $content = null) {
     return wp_nav_menu( array( 'menu' => $name, 'echo' => false ) );
 }
 add_shortcode('menu', 'print_menu_shortcode');
+
+function clearboth() {
+    return '<div style="clear:both"></div>';
+}
+add_shortcode("clearboth", "clearboth");
+
+// Add Shortcode
+function ctabutton( $atts , $content = null ) {
+
+	// Attributes
+	extract( shortcode_atts(
+		array(
+			'float' => '',
+		), $atts )
+	);
+
+	// Code
+return '<div class="ctabutton" style="float: '.$float.';">'.$content.'</div>';
+}
+add_shortcode( 'ctabutton', 'ctabutton' );
 
 function maxMenu() {
     return wp_nav_menu( array( 'theme_location' => 'primary' ) );
