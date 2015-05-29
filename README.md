@@ -4,7 +4,7 @@ It started out as a relatively simple and small project to make it super easy an
 
 # What it does
 
-Rapid Platform Base originally started as a base theme and wordpress install for The Rapid Platform (http://www.therapidplatform.com) and while Rapid Platform is certainly still an important part, it's roll gets progressively smaller as development continues.
+Rapid Platform Base originally started as a base theme and wordpress install for The Rapid Platform (http://www.therapidplatform.com) and while Rapid Platform is certainly still an important part, it's role gets progressively smaller as development continues.
 
 Using the plugins provided and the customization options therein, this framework will allow you to erect custom sites in minutes. I even use it on my own company site (http://www.it-magique.com), and it is in use for quite a few other sites on the web as well.
 
@@ -49,3 +49,7 @@ This framework is ever evolving and will be continually updated. It is primarily
 ## Getting Started
 
 Clone the repo (or download the zip), and create a new database. Import the database included. The default username/pass for the admin panel is rapid/testing. Make sure to create a new username and delete this default user as soon as possible.
+
+# What if I want to add some custom css?
+
+Not a problem, the theme looks for a file called site-specific-styles.css, if it exists, it will be imported. Put any custom css in that file (you might need to create it), and place that file in the root of the theme folder.
