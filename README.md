@@ -1,3 +1,7 @@
+# This file might be out of date, make sure to check the wiki for the latest documentation!
+
+## Wiki: https://github.com/ForbodingAngel/Rapid-Platform-Base/wiki
+
 # What is "Rapid Platform Base"
 
 It started out as a relatively simple and small project to make it super easy and fast to prototype new websites with dynamic layouts and the ability to change the entire look on the fly, as well as give the end user complete control over their website. This is so that someone with 0 coding ability can change the entire site around to their liking via simply using the admin panel
