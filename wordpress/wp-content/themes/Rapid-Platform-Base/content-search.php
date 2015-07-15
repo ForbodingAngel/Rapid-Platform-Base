@@ -18,9 +18,8 @@
 		</div><!-- .entry-meta -->
 		<?php endif; ?>
 	</header><!-- .entry-header -->
-
 	<div class="entry-summary">
-		<?php the_excerpt(); ?>
+		<?php echo get_the_post_thumbnail( $page->ID, 'thumbnail' ); ?><?php the_excerpt(); ?>
 	</div><!-- .entry-summary -->
 
 	<footer class="entry-footer">

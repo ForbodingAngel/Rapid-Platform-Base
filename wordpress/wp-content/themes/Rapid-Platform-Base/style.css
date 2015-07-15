@@ -7,13 +7,13 @@ Description: Base Theme for Rapid Platform
 Version: 1.0.0
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Text Domain: Rapid
+Text Domain: Rapid Platform Base
 Tags:
 
 This theme, like WordPress, is licensed under the GPL.
 Use it to make something cool, have fun, and share what you've learned with others.
 
-Rapid is based on Underscores http://underscores.me/, (C) 2012-2015 Automattic, Inc.
+Rapid Platform Base is based on Underscores http://underscores.me/, (C) 2012-2015 Automattic, Inc.
 
 Resetting and rebuilding styles have been helped along thanks to the fine work of
 Eric Meyer http://meyerweb.com/eric/tools/css/reset/index.html
@@ -31,6 +31,7 @@ and Blueprint http://www.blueprintcss.org/
 	0.4 Footer Widget (Site-Info)
 	0.5 Site Colors and Padding
 	0.6 Call to Action
+	0.8 Masonry
 	0.9 Site Fixes
 1.0 Reset
 2.0 Typography
@@ -59,6 +60,11 @@ and Blueprint http://www.blueprintcss.org/
 /*--------------------------------------------------------------
 0.0 Layout Options
 --------------------------------------------------------------*/
+
+.site-breadcrumbs {
+	font-size: 12px;
+	margin-top: 20px;
+}
 
 /* Inline Styles are bad mmk? But in this case they are necessary because we want our pages to automagically work properly whether they have a sidebar or not */
 /* Important is being used to combat necessary inline styles */
@@ -222,6 +228,39 @@ body {
 	color: #ffffff !important;
 }
 
+
+/*--------------------------------------------------------------
+0.8 Masonry
+--------------------------------------------------------------*/
+
+.item-listing { /* Masonry container */
+    column-count: 2;
+    -webkit-column-count: 2;
+    column-gap: 2em;
+    -webkit-column-gap: 2em;
+}
+
+.individual-item { /* Masonry bricks or child elements */
+
+    display: inline-block !important;
+    margin: 0 0 1em;
+    width: 100%;
+}
+
+.individual-item img {
+    float: left;
+    margin-right: 15px;
+}
+
+@media screen and (max-width: 800px) {
+	.item-listing { /* Masonry container */
+		column-count: 1;
+		-webkit-column-count: 1;
+		column-gap: 0em;
+		-webkit-column-gap: 0em;
+	}
+}
+
 /*--------------------------------------------------------------
 0.9 Site Fixes
 --------------------------------------------------------------*/
@@ -240,7 +279,7 @@ body {
 }
 
 #content a {
-	word-break: break-all;
+	word-break: break-word;
 }
 
 /* Fix for ninjaforms inserting br tags all over the place */

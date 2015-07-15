@@ -219,3 +219,12 @@ add_theme_support( 'post-thumbnails' );
 
 /* Remove wordpress theme and plugin editor */
 define( 'DISALLOW_FILE_EDIT', true );
+
+/* Add a custom style for the post/page editor so that pages are easier to lay out */
+function my_theme_add_editor_styles() {
+    add_editor_style( 'custom-editor-style.css' );
+}
+add_action( 'admin_init', 'my_theme_add_editor_styles' );
+
+/* Disable WordPress Admin Bar for all users */
+show_admin_bar(false);
