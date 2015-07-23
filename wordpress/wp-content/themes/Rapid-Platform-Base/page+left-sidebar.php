@@ -5,14 +5,6 @@ Template Name: Page + Left Sidebar
 
 get_header(); ?>
 
-<?php
-	if ( function_exists( 'yoast_breadcrumb' ) ) { ?>
-		<div class="site-breadcrumbs">
-			<?php yoast_breadcrumb(); ?>
-		</div>
-<?php	}
-?>
-
 <?php get_template_part( 'sidebar-left' ); ?>
 
 	<div id="primary" class="content-area with-left-sidebar">

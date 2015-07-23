@@ -1,17 +1,9 @@
 <?php
 /*
-Template Name: Landing Page
+Template Name: Landing Page Without Breadcrumbs
 */
 
 get_header(); ?>
-
-<?php
-	if ( function_exists( 'yoast_breadcrumb' ) ) { ?>
-		<div class="site-breadcrumbs">
-			<?php yoast_breadcrumb(); ?>
-		</div>
-<?php	}
-?>
 
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">

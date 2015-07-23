@@ -5,14 +5,6 @@ Template Name: Page + Sidebar + Top Sidebar (When Responsive)
 
 get_header(); ?>
 
-<?php
-	if ( function_exists( 'yoast_breadcrumb' ) ) { ?>
-		<div class="site-breadcrumbs">
-			<?php yoast_breadcrumb(); ?>
-		</div>
-<?php	}
-?>
-
 <?php get_template_part( 'sidebar-responsive' ); ?>
 
 	<div id="primary" class="content-area with-right-sidebar">

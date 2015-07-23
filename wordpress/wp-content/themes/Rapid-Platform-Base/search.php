@@ -7,6 +7,14 @@
 
 get_header(); ?>
 
+	<?php
+		if ( function_exists( 'yoast_breadcrumb' ) ) { ?>
+			<div class="site-breadcrumbs">
+				<?php yoast_breadcrumb(); ?>
+			</div>
+	<?php	}
+	?>
+
 	<section id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
 

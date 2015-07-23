@@ -5,14 +5,6 @@ Template Name: Page + Sidebar
 
 get_header(); ?>
 
-<?php
-	if ( function_exists( 'yoast_breadcrumb' ) ) { ?>
-		<div class="site-breadcrumbs">
-			<?php yoast_breadcrumb(); ?>
-		</div>
-<?php	}
-?>
-
 	<div id="primary" class="content-area with-right-sidebar">
 		<main id="main" class="site-main" role="main">
 
