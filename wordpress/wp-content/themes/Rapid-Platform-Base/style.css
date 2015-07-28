@@ -308,6 +308,7 @@ body {
 		max-width: 1000px;
 	}
 }
+
 #mega-menu-wrap-primary {
 	z-index: 999999;
 }
@@ -433,6 +434,24 @@ body {
 		margin: 0 !important;
 		padding: 0 !important;
 	}
+}
+
+/* Remove margins */
+
+.no-top-margin, .no-margin {
+	margin-top: 0;
+}
+
+.no-bottom-margin, .no-margin {
+	margin-bottom: 0;
+}
+
+.no-left-margin, .no-margin {
+	margin-left: 0;
+}
+
+.no-right-margin, .no-margin {
+	margin-right: 0;
 }
 
 /*--------------------------------------------------------------
