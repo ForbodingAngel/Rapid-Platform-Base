@@ -50,7 +50,8 @@
 
 				<?php else : ?>
 					<!-- This content shows up if there are no widgets defined in the backend. -->
-				<?php endif; ?>						
+				<?php endif; ?>	
+				<div style="clear: both;"></div>
 			</div>
 			<div class="header-menu-below">
 				<?php if ( is_active_sidebar( 'header-menu-below' ) ) : ?>

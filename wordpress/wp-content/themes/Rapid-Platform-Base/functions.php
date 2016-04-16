@@ -217,6 +217,18 @@ add_shortcode('maxmenu', 'maxMenu');
 
 add_theme_support( 'post-thumbnails' ); 
 
+function responsive( $atts , $content = null ) {
+	
+	// Attributes
+	extract( shortcode_atts(
+		array(
+		), $atts )
+	);
+
+    return '<div class="embed-container">'.$content.'</div>';
+}
+add_shortcode("responsive-embed", "responsive");
+
 /* Remove wordpress theme and plugin editor */
 define( 'DISALLOW_FILE_EDIT', true );
 

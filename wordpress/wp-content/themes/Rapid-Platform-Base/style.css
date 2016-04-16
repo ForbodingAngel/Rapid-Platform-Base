@@ -101,6 +101,10 @@ and Blueprint http://www.blueprintcss.org/
 .header-sidebar-container {
 }
 
+.header-sidebar-container .widget {
+	margin: 0;
+}
+
 @media screen and (max-width: 800px) {
 	.header-sidebar-container .rp-column {
 		text-align: center;
