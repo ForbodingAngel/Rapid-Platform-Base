@@ -115,6 +115,22 @@ div[id*="black-studio-tinymce"] .mce-wp-fullscreen {
 }
 
 
+/* Fix z-index for link dialog windows (used on recent WP versions) */
+
+.wp-customizer #wp-link-backdrop {
+	z-index: 500010;
+}
+
+.wp-customizer #wp-link-wrap {
+	z-index: 500020;
+}
+
+.wp-customizer .ui-autocomplete.wplink-autocomplete,
+.wp-customizer div.mce-inline-toolbar-grp {
+	z-index: 500025;
+}
+
+
 /* Change mouse cursor when waiting */
 
 body.wait, body.wait * {
