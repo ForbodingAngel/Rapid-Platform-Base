@@ -192,13 +192,19 @@ body {
 #page {
 	/*box-shadow: 0px 0px 10px #000;*/
 }
-
 #masthead {
 
+}
+.header-sidebar-container {
+	margin-left: auto;
+    margin-right: auto;
+	height: 100%;
 }
 #content {
 	padding-left: 20px;
 	padding-right: 20px;
+	margin-left: auto;
+    margin-right: auto;
 }
 .secondary {
 	padding-left: 10px;
@@ -207,6 +213,8 @@ body {
 .site-footer {
 	padding-left: 20px;
 	padding-right: 20px;
+	margin-left: auto;
+    margin-right: auto;
 }
 
 /*--------------------------------------------------------------
@@ -294,11 +302,11 @@ body {
 .stickynav {
 	
 	/* UnComment these lines if you DO want the nav bar to stay within the page width when sticky */
-	max-width: 1000px;
+	/* max-width: 1000px; */
 	/* UnComment these lines if you DO want the nav bar to stay within the page width when sticky */	
 	
 	/* UnComment out these lines if you DON'T want the nav bar to stay within the page width when sticky */
-	/* left: 0px; */
+	left: 0px;
 	/* UnComment out these lines if you DON'T want the nav bar to stay within the page width when sticky */
 	
 	z-index: 999999;
@@ -498,7 +506,19 @@ body {
 }
 
 #page {
-	max-width: 1000px;
+}
+
+.masthead-container {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.content-container {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.footer-container {
 	margin-left: auto;
 	margin-right: auto;
 }
