@@ -33,17 +33,18 @@
 	<a class="skip-link screen-reader-text" href="#content"><?php _e( 'Skip to content', 'rapidtesting' ); ?></a>
 
 	<div class="masthead-container">
+		<div class="header-menu-above">
+			<?php if ( is_active_sidebar( 'header-menu-above' ) ) : ?>
+
+				<?php dynamic_sidebar( 'header-menu-above' ); ?>
+
+			<?php else : ?>
+				<!-- This content shows up if there are no widgets defined in the backend. -->
+			<?php endif; ?>
+		</div>
 		<header id="masthead" class="site-header" role="banner">
 			<div class="header-sidebar-container">
-				<div class="header-menu-above">
-				<?php if ( is_active_sidebar( 'header-menu-above' ) ) : ?>
 
-					<?php dynamic_sidebar( 'header-menu-above' ); ?>
-
-				<?php else : ?>
-					<!-- This content shows up if there are no widgets defined in the backend. -->
-				<?php endif; ?>
-				</div>
 				<div id="header-sidebar" class="clearfix" role="complementary">
 					<?php if ( is_active_sidebar( 'header-sidebar' ) ) : ?>
 

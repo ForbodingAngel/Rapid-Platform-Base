@@ -191,6 +191,8 @@ body {
 
 #page {
 	/*box-shadow: 0px 0px 10px #000;*/
+	margin-left: auto;
+    margin-right: auto;
 }
 #masthead {
 
@@ -322,6 +324,8 @@ body {
 }
 
 #mega-menu-wrap-primary {
+	margin-left: auto;
+    margin-right: auto;
 	z-index: 999999;
 }
 
@@ -478,10 +482,10 @@ dl, dt, dd, ol, ul, li,
 fieldset, form, label, legend,
 table, caption, tbody, tfoot, thead, tr, th, td {
 	border: 0;
-	font-family: inherit;
+	/* font-family: inherit; */
 	font-size: 100%;
-	font-style: inherit;
-	font-weight: inherit;
+	/* font-style: inherit; */
+	/* font-weight: inherit; */
 	margin: 0;
 	outline: 0;
 	padding: 0;
@@ -891,6 +895,8 @@ textarea {
 /*--------------------------------------------------------------
 5.1 Links
 --------------------------------------------------------------*/
+/* These should be set in user specific styles, not here */
+/*
 a {
 	color: royalblue;
 }
@@ -902,7 +908,7 @@ a:focus,
 a:active {
 	color: midnightblue;
 }
-
+*/
 /*--------------------------------------------------------------
 5.2 Menus
 --------------------------------------------------------------*/
