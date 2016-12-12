@@ -152,7 +152,7 @@ final class NF_Database_Models_Submission
      */
     public function update_field_value( $field_ref, $value )
     {
-        $field_id = ( is_int( $field_ref ) ) ? $field_ref : $this->get_field_id_by_key( $field_ref );
+        $field_id = ( is_numeric( $field_ref ) ) ? $field_ref : $this->get_field_id_by_key( $field_ref );
 
         $this->_field_values[ $field_id ] = WPN_Helper::kses_post( $value );
 
@@ -298,6 +298,8 @@ final class NF_Database_Models_Submission
 
         $fields = Ninja_Forms()->form( $form_id )->get_fields();
 
+        usort( $fields, array( self, sort_fields ) );
+
         $hidden_field_types = apply_filters( 'nf_sub_hidden_field_types', array() );
 
         foreach( $fields as $field ){
@@ -327,7 +329,15 @@ final class NF_Database_Models_Submission
 
                 if( ! is_int( $field_id ) ) continue;
 
-                $value[ $field_id ] = $sub->get_field_value( $field_id );
+                $field_value = $sub->get_field_value( $field_id );
+                $field_value = apply_filters( 'nf_subs_export_pre_value', $field_value, $field_id );
+                $field_value = apply_filters( 'ninja_forms_subs_export_pre_value', $field_value, $field_id, $form_id );
+
+                if( is_array( $field_value ) ){
+                    $field_value = implode( ' | ', $field_value );
+                }
+
+                $value[ $field_id ] = $field_value;
             }
 
             $value_array[] = $value;
@@ -463,6 +473,14 @@ final class NF_Database_Models_Submission
         $field_id = $wpdb->get_var( "SELECT id FROM {$wpdb->prefix}nf3_fields WHERE `key` = '{$field_key}' AND `parent_id` = {$this->_form_id}" );
 
         return $field_id;
+    }
+
+    public static function sort_fields( $a, $b )
+    {
+        if ( $a->get_setting( 'order' ) == $b->get_setting( 'order' ) ) {
+            return 0;
+        }
+        return ( $a->get_setting( 'order' ) < $b->get_setting( 'order' ) ) ? -1 : 1;
     }
 
 
