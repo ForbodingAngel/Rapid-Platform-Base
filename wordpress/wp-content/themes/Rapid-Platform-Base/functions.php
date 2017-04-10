@@ -210,6 +210,20 @@ return '<div class="ctabutton" style="float: '.$float.';">'.$content.'</div>';
 }
 add_shortcode( 'ctabutton', 'ctabutton' );
 
+function limitwidth( $atts , $content = null ) {
+
+	// Attributes
+	extract( shortcode_atts(
+		array(
+			'maxwidth' => '',
+		), $atts )
+	);
+
+	// Code
+return '<div class="limitwidth" style="margin-left: auto; margin-right: auto; max-width: '.$maxwidth.';">'.$content.'</div>';
+}
+add_shortcode( 'limitwidth', 'limitwidth' );
+
 function maxMenu() {
     return wp_nav_menu( array( 'theme_location' => 'primary' ) );
 }
