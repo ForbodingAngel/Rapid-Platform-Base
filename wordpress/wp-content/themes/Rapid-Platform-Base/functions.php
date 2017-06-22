@@ -220,7 +220,7 @@ function limitwidth( $atts , $content = null ) {
 	);
 
 	// Code
-return '<div class="limitwidth" style="margin-left: auto; margin-right: auto; max-width: '.$maxwidth.';">'.$content.'</div>';
+return '<div class="limitwidth" style="margin-left: auto; margin-right: auto; max-width: '.$maxwidth.';">' . do_shortcode($content) . '</div>';
 }
 add_shortcode( 'limitwidth', 'limitwidth' );
 
