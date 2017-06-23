@@ -335,6 +335,8 @@ body {
 
 #mega-menu-wrap-primary #mega-menu-primary {
   margin-top: -13px !important;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 #mega-menu-wrap-primary input[type="checkbox"].mega-menu-toggle {
