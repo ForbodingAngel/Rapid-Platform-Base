@@ -8,9 +8,12 @@
 /**
  * Set the content width based on the theme's design and stylesheet.
  */
+// THIS IS A FUCKING STUPID METHOD
+/*
 if ( ! isset( $content_width ) ) {
-	$content_width = 640; /* pixels */
+	$content_width = 640; // pixels
 }
+*/
 
 if ( ! function_exists( 'rapidtesting_setup' ) ) :
 /**
