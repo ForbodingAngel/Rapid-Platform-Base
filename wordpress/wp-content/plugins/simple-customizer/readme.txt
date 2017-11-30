@@ -2,15 +2,15 @@
 Contributors: Clorith
 Author URI: http://www.clorith.net
 Plugin URI: http://www.clorith.net/wordpress-simple-customize/
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=C8W62C6EZXJPY
+Donate link: https://www.paypal.me/clorith
 Tags: theme, customization, customisation, css, design
 Requires at least: 3.4
-Tested up to: 4.5
-Stable tag: 1.6.5
+Tested up to: 4.9
+Stable tag: 1.7.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-It's your site, customize and show it!
+It's your site, now customize it!
 
 == Description ==
 
@@ -28,11 +28,6 @@ You are also able to implement 3rd party fonts using the plugins own options pag
 
 All customizations are theme-specific, this means if you ever change your theme, you will get a clean slate to work off when customizing it.
 Of course, should you ever revert back to your old theme, your previous custom styling will still be there.
-
-**Translations**
-
-Español (Spanish) - Andrew Kurtis @ [WebHostingHub](http://www.webhostinghub.com)
-
 
 **Note:** You should always be cautious of modifying other peoples work, respect the time and dedication put forth by your themes author.
 
@@ -63,32 +58,6 @@ Styling your site is never an easy task, and to give you the best possible tools
 
 == Changelog ==
 
-= 1.6.5 =
-* Compatibility update for WordPress 4.5
-* Moved extended changelog entries to `changelog.txt`
-
-= 1.6.4 =
-* Fixed Google Fonts not always being included like they should, resulting in default fonts being displayed
-
-= 1.6.3 =
-* Fixed live previewing of changes made
-
-= 1.6.2 =
-* Updated the style clearing option to also clear the newly added format for customization storage
-* Streamlined the uninstall procedure when removing the plugin
-* Added some missing checks to prevent direct loading of files
-* Fixed problem with exporting as CSS when picking a theme that isn't currently active
-
-= 1.6.1 =
-* Fix for imports using the new format some times failing due to auto-generated slashes
-
-= 1.6 =
-* Made the customizer attribute cases extendible
-* Added hooks to various areas to make the plugin more flexible
-* Fixed custom categories not showing up in the customizer screen
-* Fixed editing mixing up attributes and selectors
-
-
-== Upgrade notice ==
-
-Fix for Google fonts and live previews
+= 1.7.0 =
+* Fixed error preventing loading of the customizer screen in some cases.
+* Updated to use the Customizer Previewer API, more reliable and future proof!

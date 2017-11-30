@@ -57,7 +57,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</div>
 </label>
 <label class="simple-customize-advanced <?php echo implode( " ", $customize_classes ); ?>">
-	<input type="checkbox" id="customize-strict-grab" <?php echo ( isset( $settings['advanced'] ) && true === $settings['advanced'] ? : 'checked="checked"' ); ?>>
+	<input type="checkbox" id="customize-strict-grab" <?php echo ( isset( $settings['advanced'] ) && true === $settings['advanced'] ? '' : 'checked="checked"' ); ?>>
 	<?php _e( 'Grab only the last selector', 'simple-customize-plugin' ); ?>
 </label>
 <label class="simple-customize-reveal <?php echo implode( " ", $customize_classes ); ?>">

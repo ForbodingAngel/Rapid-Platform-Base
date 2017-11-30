@@ -1,3 +1,31 @@
+= 1.6.6 =
+* Compatibility update for WordPress 4.7
+
+= 1.6.5 =
+* Compatibility update for WordPress 4.5
+* Moved extended changelog entries to `changelog.txt`
+
+= 1.6.4 =
+* Fixed Google Fonts not always being included like they should, resulting in default fonts being displayed
+
+= 1.6.3 =
+* Fixed live previewing of changes made
+
+= 1.6.2 =
+* Updated the style clearing option to also clear the newly added format for customization storage
+* Streamlined the uninstall procedure when removing the plugin
+* Added some missing checks to prevent direct loading of files
+* Fixed problem with exporting as CSS when picking a theme that isn't currently active
+
+= 1.6.1 =
+* Fix for imports using the new format some times failing due to auto-generated slashes
+
+= 1.6 =
+* Made the customizer attribute cases extendible
+* Added hooks to various areas to make the plugin more flexible
+* Fixed custom categories not showing up in the customizer screen
+* Fixed editing mixing up attributes and selectors
+
 = 1.5 =
 * Improved how the customizer section is generated
 * Improved handling of Google Fonts

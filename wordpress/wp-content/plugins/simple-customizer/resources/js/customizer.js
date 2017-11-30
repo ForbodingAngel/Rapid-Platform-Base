@@ -1,5 +1,71 @@
-jQuery(document).ready(function ($) {
-	var simple_select = false;
+/**
+ * Receive data from the customizer
+ */
+( function ( exports, $ ) {
+	"use strict";
+
+	var api = wp.customize,
+		OldPreviewer,
+		simple_select = false;
+
+	api.SimpleCustomizerPreviewer = {
+		init: function () {
+			var self = this;
+
+			this.preview.bind( 'simple-customizer-preview-click', function ( data ) {
+				var theseParents,
+					styled;
+
+				if ( simple_select ) {
+					simple_select = false;
+
+					if ($("#customize-strict-grab").is(':checked')) {
+						theseParents = data.parents.strict;
+					} else {
+						theseParents = data.parents.non_strict;
+					}
+
+					$("#simple_customize_selected").val(theseParents);
+					$("#simple_customize_label").val(data.label);
+					$("#simple_customize_default").val(data.default);
+
+					$("#simple_customize_selector_auto").find('option').remove().end();
+
+					styled = $.map(data.styles, function(value, index) {
+						return [value];
+					});
+
+					for (var i = 0; i < styled.length; i++) {
+						$("#simple_customize_selector_auto").append('<option value="' + styled[i] + '">' + styled[i] + '</option>');
+					}
+
+					simple_customize_reveal();
+					simple_customize_show();
+				}
+			} );
+		}
+	};
+
+	/**
+	 * Capture the instance of the Preview since it is private (this has changed in WordPress 4.0)
+	 *
+	 * @see https://github.com/WordPress/WordPress/blob/5cab03ab29e6172a8473eb601203c9d3d8802f17/wp-admin/js/customize-controls.js#L1013
+	 */
+	OldPreviewer = api.Previewer;
+	api.Previewer = OldPreviewer.extend( {
+		initialize: function( params, options ) {
+			// Store a reference to the Previewer
+			api.SimpleCustomizerPreviewer.preview = this;
+
+			// Call the old Previewer's initialize function
+			OldPreviewer.prototype.initialize.call( this, params, options );
+		}
+	} );
+
+	$( function() {
+		// Initialize our Previewer
+		api.SimpleCustomizerPreviewer.init();
+	} );
 
 	function simple_customize_hide() {
 		$(".simple-customize").addClass( 'simple-customize-hide' );
@@ -16,67 +82,15 @@ jQuery(document).ready(function ($) {
 		$(".simple-customize-reveal").removeClass( 'simple-customize-reveal' );
 	}
 
-	function iframeDetect()
-	{
-		if ( $("iframe").length > 0 )
-		{
-			clearInterval(iframeDetector);
-
-			$("iframe").contents().on('click', function (e) {
-				if (simple_select) {
-					var theseParents = $.map($(e.target).parents().not('html').not('body'), function(elm) {
-						var entry = elm.tagName.toLowerCase();
-						if (elm.className) {
-							entry += "." + elm.className.replace(/ /g, '.');
-						}
-						return entry
-					});
-
-					if ($("#customize-strict-grab").is(':checked')) {
-						theseParents = theseParents[0];
-					} else {
-						theseParents.reverse();
-						theseParents = theseParents.join(" ");
-					}
-
-					simple_select = false;
-
-					$("#simple_customize_selected").val(theseParents);
-					$("#simple_customize_label").val($(e.target).text().trim());
-					$("#simple_customize_default").val($(e.target).css('color'));
-
-					var styled = window.getComputedStyle(e.target);
-					$("#simple_customize_selector_auto").find('option').remove().end();
-
-					for(var i = 0; i < styled.length; i++) {
-						$("#simple_customize_selector_auto").append('<option value="' + styled[i] + '">' + styled[i] + '</option>');
-					}
-
-					simple_customize_reveal();
-					simple_customize_show();
-				}
-			});
-		}
-	}
-
-	$("#simple_customize_selector_auto").change(function (e) {
-		$("#simple_customize_default").val($("iframe").contents().find($("#simple_customize_selected").val()).css($(this).val()));
-	});
-
-	var iframeDetector = setInterval( iframeDetect, 200 );
-
-	$("#simple_customize_selector").on('click', function (e) {
+	$("#customize-theme-controls").on( 'change', '#simple_customize_selector_auto', function (e) {
+		$("#simple_customize_default").val($("#customize-preview iframe").contents().find($("#simple_customize_selected").val()).css($(this).val()));
+	}).on('click', '#simple_customize_selector', function (e) {
 		simple_select = true;
 		simple_customize_hide();
-	});
-
-	$("#simple_customize_cancel").on('click', function (e) {
+	}).on('click', '#simple_customize_cancel', function (e) {
 		simple_select = false;
 		simple_customize_show();
-	});
-
-
-	$("#simple_customize_store").click(function (e) {
+	}).on( 'click', '#simple_customize_store', function (e) {
 		e.preventDefault();
 		$.post(
 			SimpleCustomize.ajaxurl,
@@ -94,4 +108,4 @@ jQuery(document).ready(function ($) {
 			}
 		);
 	});
-});
+} )( wp, jQuery );

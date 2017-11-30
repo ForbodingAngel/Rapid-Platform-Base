@@ -3,7 +3,7 @@
  * Plugin Name: Simple Customizer
  * Plugin URI: http://www.clorith.net/wordpress-simple-customize/
  * Description: Customize the look of your themes without modifying any code, just point and click on the element you wish to change.
- * Version: 1.6.5
+ * Version: 1.7.0
  * Author: Clorith
  * Text Domain: simple-customizer
  * Author URI: http://www.clorith.net
@@ -35,7 +35,7 @@ class simple_customize
      * @var array $sections Used for storing our added sections before displaying them
      * @var array $settings The settings we wish to implement
      */
-	private $version   = "1.6.5";
+	private $version   = "1.7.0";
 	private $debug     = false;
     private $sections  = array();
     public $settings   = array();
@@ -82,6 +82,8 @@ class simple_customize
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ), 15 );
 
         add_action( 'customize_controls_enqueue_scripts', array( $this, 'customize_js' ) );
+        add_action( 'customize_preview_init', array( $this, 'customize_js_preview' ) );
+
         add_action( 'wp_ajax_simple-customize-new-object', array( $this, 'customize_ajax_add' ) );
 		add_action( 'wp_ajax_simple-customize', array( $this, 'ajax_handler' ) );
 
@@ -98,8 +100,53 @@ class simple_customize
 	 * @return void
 	 */
 	function maybe_update_plugin() {
+		//  Make sure we only run the updater if there's truly a need on subsequent runs
 		if ( version_compare( $this->version, get_option( 'simple-customize-version', 0 ), '>' ) && ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX ) ) {
-			//  Make sure we only run the updater if there's truly a need on subsequent runs
+
+			if ( version_compare( get_option( 'simple-customize-version', 0 ), '1.5', '>=' ) && version_compare( get_option( 'simple-customize-version', 0 ), '1.6.6', '<' ) ) {
+				/*
+				 * Run migrations, WordPress 4.7 changed the customizer to not support integer-only theme option names
+				 */
+				$entries  = get_posts( array(
+					'posts_per_page' => -1,
+					'post_type'      => 'simple-customize',
+				) );
+
+				$mods = array();
+
+				foreach ( $entries AS $entry ) {
+					$meta  = get_post_meta( $entry->ID );
+					$theme = $meta['_simple_customize_theme'][0];
+
+					if ( ! isset( $mods[ $theme ] ) ) {
+						$mods[ $theme ] = get_option( "theme_mods_" . $theme, false );
+					}
+
+					if ( false === $mods[ $theme ] ) {
+						// false means no theme options exist, and we can ignore this theme completely
+						continue;
+					}
+
+					if ( ! isset( $mods[ $theme ][ $entry->ID ] ) ) {
+						// No settings for this entry are set, so it can also be safely ignored
+						continue;
+					}
+
+					// Set up the prefixed version of the theme mod with the non-prefixed version data
+					$mods[ $theme ][ 'simple-customize-' . $entry->ID ] = $mods[ $theme ][ $entry->ID ];
+
+					// Remove the previous non-prefixed value from the stored data
+					unset( $mods[ $theme ][ $entry->ID ] );
+				}
+
+				// Loop over all the theme mods we've got and re-save them
+				foreach( $mods AS $theme => $data ) {
+					update_option( 'theme_mods_' . $theme, $data );
+				}
+
+				update_option( 'simple-customize-version', $this->version );
+			}
+
 			if ( get_option( 'simple-customize-version', 0 ) < 1.5 ) {
 				$customizations = get_option( 'simple_customize', array() );
 				$categories     = get_option( 'simple_customize_category', array() );
@@ -560,9 +607,24 @@ class simple_customize
      */
     function customize_js() {
 	    wp_enqueue_style( 'simple-customize-css-controls', plugin_dir_url( __FILE__ ) . '/resources/css/customizer.css', array(), $this->version );
-	    wp_enqueue_script( 'css-controls-print', plugin_dir_url( __FILE__ ) . '/resources/js/customizer.js', array( 'jquery' ), $this->version, true );
+	    wp_enqueue_script( 'simple-customize-controls-print', plugin_dir_url( __FILE__ ) . '/resources/js/customizer.js', array( 'jquery' ), $this->version, true );
 
-        wp_localize_script( 'css-controls-print', 'SimpleCustomize', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ), 'customizerNonce' => wp_create_nonce( 'new-simple-customize' ) ) );
+        wp_localize_script(
+        	'simple-customize-controls-print',
+	        'SimpleCustomize',
+	        array(
+	        	'ajaxurl'         => admin_url( 'admin-ajax.php' ),
+		        'customizerNonce' => wp_create_nonce( 'new-simple-customize' )
+	        )
+        );
+    }
+
+    function customize_js_preview() {
+	    add_action( 'wp_enqueue_scripts', array( $this, 'customizer_js_preview_inner' ) );
+    }
+
+    function customizer_js_preview_inner() {
+	    wp_enqueue_script( 'simple-customize-previewer', plugin_dir_url( __FILE__ ) . '/resources/js/customizer-preview.js', array( 'jquery' ), $this->version, true );
     }
 
     /**
@@ -627,7 +689,7 @@ class simple_customize
         //  Next, iterate over the arguments array and insert them accordingly
         foreach ( $args AS $item => $data )
         {
-            $array[$item] = $data;
+            $array[ $item ] = $data;
         }
 
         //  Finally, enter the data into the appropriate data container
@@ -920,7 +982,7 @@ class simple_customize
 						    "%s { %s: url( '%s' ); }",
 						    $meta['_simple_customize_selector'][0],
 						    $meta['_simple_customize_attribute'][0],
-						    get_theme_mod( $entry->ID, $meta['_simple_customize_default'][0] )
+						    get_theme_mod( 'simple-customize-' . $entry->ID, $meta['_simple_customize_default'][0] )
 					    );
 					    break;
 				    default:
@@ -928,7 +990,7 @@ class simple_customize
 						    "%s { %s: %s; }",
 						    $meta['_simple_customize_selector'][0],
 						    $meta['_simple_customize_attribute'][0],
-						    get_theme_mod( $entry->ID, $meta['_simple_customize_default'][0] )
+						    get_theme_mod( 'simple-customize-' . $entry->ID, $meta['_simple_customize_default'][0] )
 					    );
 			    }
 
@@ -982,7 +1044,7 @@ class simple_customize
 		    $meta = get_post_meta( $entry->ID );
 
             echo "
-                wp.customize( '" . $entry->ID . "', function( value ) {
+                wp.customize( 'simple-customize-" . $entry->ID . "', function( value ) {
                     value.bind( function( newval ) {
                         $('" . $meta['_simple_customize_selector'][0] . "').css('" . $meta['_simple_customize_attribute'][0] . "', newval );
                     } );
@@ -1109,7 +1171,7 @@ class simple_customize
             ), $this->attribute['args'] );
 
             $this->add(
-	            $entry->ID,
+	            'simple-customize-' . $entry->ID,
                 'color',
 	            $this->attribute['args']
             );

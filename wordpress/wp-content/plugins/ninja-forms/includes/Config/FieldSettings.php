@@ -150,7 +150,7 @@ return apply_filters( 'ninja_forms_field_settings', array(
     'options' => array(
         'name' => 'options',
         'type' => 'option-repeater',
-        'label' => __( 'Options', 'ninja-forms' ) . ' <a href="#" class="nf-add-new">' . __( 'Add New', 'ninja-forms' ) . '</a>',
+        'label' => __( 'Options', 'ninja-forms' ) . ' <a href="#" class="nf-add-new">' . __( 'Add New', 'ninja-forms' ) . '</a> <a href="#" class="extra nf-open-import-tooltip"><i class="fa fa-sign-in" aria-hidden="true"></i> ' . __( 'Import', 'ninja-forms' ) . '</a>',
         'width' => 'full',
         'group' => 'primary',
         // 'value' => 'option-repeater',
@@ -213,6 +213,10 @@ return apply_filters( 'ninja_forms_field_settings', array(
             array(
                 'label' => __( 'Date', 'ninja-forms' ),
                 'value' => '99/99/9999',
+            ),
+            array(
+                'label' => __( 'Currency', 'ninja-forms' ),
+                'value' => 'currency',
             ),
             array(
                 'label' => __( 'Custom', 'ninja-forms' ),
@@ -380,6 +384,10 @@ return apply_filters( 'ninja_forms_field_settings', array(
         'group'         => 'primary',
         'options'       => array(
             array(
+                'label' => __( 'Default', 'ninja-forms' ),
+                'value' => 'default',
+            ),
+            array(
                 'label' => __( 'DD/MM/YYYY', 'ninja-forms' ),
                 'value' => 'DD/MM/YYYY',
             ),
@@ -420,7 +428,7 @@ return apply_filters( 'ninja_forms_field_settings', array(
                 'value' => 'dddd, MMMM D YYYY',
             ),
         ),
-        'value'         => 'DD/MM/YYYY',
+        'value'         => '',
     ),
 
     /*
@@ -601,6 +609,22 @@ return apply_filters( 'ninja_forms_field_settings', array(
         'group' => 'administration',
         'value' => '',
         'help' => __( 'This column in the submissions table will sort by number.', 'ninja-forms' ),
+    ),
+
+    /*
+     |--------------------------------------------------------------------------
+     | Display Settings
+     |--------------------------------------------------------------------------
+     */
+
+    // Multi-Select List Only
+    'multi_size' => array(
+        'name' => 'multi_size',
+        'type' => 'number',
+        'label' => __( 'Multi-Select Box Size', 'ninja-forms'),
+        'width' => 'one-half',
+        'group' => 'primary',
+        'value' => 5,
     ),
 
     /*
@@ -800,7 +824,7 @@ return apply_filters( 'ninja_forms_field_settings', array(
         'type' => 'field-select',
         'label' => __( 'Confirm', 'ninja-forms' ),
         'width' => 'full',
-        'group' => 'advanced'
+        'group' => 'primary'
     ),
 
     /*
@@ -922,7 +946,7 @@ return apply_filters( 'ninja_forms_field_settings', array(
     'product_use_quantity' => array(
         'name' => 'product_use_quantity',
         'type' => 'toggle',
-        'label' => __( 'Use Quantity', 'ninja-forms' ),
+        'label' => __( 'Use Inline Quantity', 'ninja-forms' ),
         'width' => 'one-half',
         'group' => 'primary',
         'value' => TRUE,

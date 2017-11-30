@@ -73,68 +73,45 @@ class Mega_Menu_Walker extends Walker_Nav_Menu {
 		// Item Class
         $classes = empty( $item->classes ) ? array() : (array) $item->classes;
 
-        $classes[] = 'menu-item-' . $item->ID;
-
-        if ( $depth == 0 ) {
-			$classes[] = 'align-' . $settings['align'];
-			$classes[] = 'menu-' . $settings['type'];
+		if ( is_array( $item->classes ) && ! in_array( "menu-column", $item->classes ) && ! in_array( "menu-row", $item->classes ) ) {
+			$classes[] = 'menu-item-' . $item->ID;
 		}
-
-        if ( $settings['hide_arrow'] == 'true') {
-        	$classes[] = 'hide-arrow';
-        }
-
-        if ( $settings['hide_text'] == 'true' && $depth == 0 ) {
-        	$classes[] = 'hide-text';
-        }
-
-        if ( $settings['item_align'] != 'left' && $depth == 0 ) {
-        	$classes[] = 'item-align-' . $settings['item_align'];
-        }
-
-        // add column classes for second level menu items displayed in mega menus
-        if ( $item->type != 'widget' && $depth == 1 ) {
-
-        	$parent_settings = array_filter( (array) get_post_meta( $item->menu_item_parent, '_megamenu', true ) );
-
-        	if ( isset( $parent_settings['type'] ) && $parent_settings['type'] == 'megamenu' ) {
-
-				$parent_settings = array_merge( Mega_Menu_Nav_Menus::get_menu_item_defaults(), $parent_settings );
-
-				$span = $settings['mega_menu_columns'];
-				$total_columns = $parent_settings['panel_columns'];
-
-				if ( $total_columns >= $span ) {
-					$classes[] = "menu-columns-{$span}-of-{$total_columns}";
-				} else {
-					$classes[] = "menu-columns-{$total_columns}-of-{$total_columns}";
-				}
-
-			}
-
-        }
 
         $class = join( ' ', apply_filters( 'megamenu_nav_menu_css_class', array_filter( $classes ), $item, $args ) );
 
-		// Item ID
-		$id = esc_attr( apply_filters( 'megamenu_nav_menu_item_id', "mega-menu-item-{$item->ID}", $item, $args ) );
+        // strip widget classes back to how they're intended to be output
+        $class = str_replace( "mega-menu-widget-class-", "", $class );
 
-		$output .= $indent . "<li class='{$class}' id='{$id}'>";
+		// Item ID
+		if ( is_array( $item->classes ) && ! in_array( "menu-column", $item->classes ) && ! in_array( "menu-row", $item->classes ) ) {
+			$id = "mega-menu-item-{$item->ID}";
+		} else {
+			$id = "mega-menu-{$item->ID}";
+		}
+
+		$id = esc_attr( apply_filters( 'megamenu_nav_menu_item_id', $id, $item, $args ) );
+
+		$output .= "<li class='{$class}' id='{$id}'>";
 
 		// output the widgets
-		if ( $item->content ) {
+		if ( $item->type == 'widget' && $item->content ) {
 
 			$item_output = $item->content;
 
 		} else {
 
 			$atts = array();
-			$atts['title']  = ! empty( $item->attr_title ) ? $item->attr_title : '';
-			$atts['target'] = ! empty( $item->target )     ? $item->target     : '';
-			$atts['rel']    = ! empty( $item->xfn )        ? $item->xfn        : '';
+
+			$atts['title'] = ! empty( $item->attr_title ) ? $item->attr_title : '';
+			$atts['target'] = ! empty( $item->target ) ? $item->target : '';
+			$atts['class'] = '';
+			$atts['rel'] = ! empty( $item->xfn ) ? $item->xfn : '';
+
 
 			if ( $settings['disable_link'] != 'true') {
-				$atts['href']   = ! empty( $item->url )        ? $item->url        : '';
+				$atts['href'] = ! empty( $item->url ) ? $item->url : '';
+			} else {
+				$atts['tabindex'] = 0;
 			}
 
 			if ( isset( $settings['icon']) && $settings['icon'] != 'disabled' ) {
@@ -143,11 +120,26 @@ class Mega_Menu_Walker extends Walker_Nav_Menu {
 
 			$atts = apply_filters( 'megamenu_nav_menu_link_attributes', $atts, $item, $args );
 
+			if ( strlen( $atts['class'] ) ) {
+				$atts['class'] = $atts['class'] . ' mega-menu-link';
+			} else {
+				$atts['class'] = 'mega-menu-link';
+			}
+
+			// required for Surface/Win10/Edge
+			if ( in_array('menu-item-has-children', $classes ) ) {
+				$atts['aria-haspopup'] = "true";
+			}
+
+			if ( $depth == 0 ) {
+				$atts['tabindex'] = "0";
+			}
+
 			$attributes = '';
 
 			foreach ( $atts as $attr => $value ) {
 
-				if ( ! empty( $value ) ) {
+				if ( strlen( $value ) ) {
 					$value = ( 'href' === $attr ) ? esc_url( $value ) : esc_attr( $value );
 					$attributes .= ' ' . $attr . '="' . $value . '"';
 				}
@@ -157,18 +149,48 @@ class Mega_Menu_Walker extends Walker_Nav_Menu {
 			$item_output = $args->before;
 			$item_output .= '<a'. $attributes .'>';
 
-			if ( $settings['hide_text'] == 'true' && $depth == 0 ) {
+			if ( in_array('icon-top', $classes ) ) {
+				$item_output .= "<span class='mega-title-below'>";
+			}
+
+			if ( $settings['hide_text'] == 'true' ) {
 				/** This filter is documented in wp-includes/post-template.php */
-			} else {
+			} else if ( property_exists( $item, 'mega_description' ) && strlen( $item->mega_description ) ) {
+		        $item_output .= '<span class="mega-description-group"><span class="mega-menu-title">' . $args->link_before . apply_filters( 'megamenu_the_title', $item->title, $item->ID ) . $args->link_after . '</span><span class="mega-menu-description">' . $item->description . '</span></span>';
+		    } else {
 				$item_output .= $args->link_before . apply_filters( 'megamenu_the_title', $item->title, $item->ID ) . $args->link_after;
+			}
+
+			if ( is_array( $classes ) && in_array('icon-top', $classes ) ) {
+				$item_output .= "</span>";
 			}
 
 			$item_output .= '</a>';
 			$item_output .= $args->after;
 
+			if ( is_array( $item->classes ) && in_array( "menu-column", $item->classes ) || in_array( "menu-row", $item->classes ) ) {
+				$item_output = "";
+			}
+
 		}
 
 		$output .= apply_filters( 'megamenu_walker_nav_menu_start_el', $item_output, $item, $depth, $args );
+	}
+
+	/**
+	 * Ends the element output, if needed.
+	 *
+	 * @see Walker::end_el()
+	 *
+	 * @since 1.7
+	 *
+	 * @param string $output Passed by reference. Used to append additional content.
+	 * @param object $item   Page data object. Not used.
+	 * @param int    $depth  Depth of page. Not Used.
+	 * @param array  $args   An array of arguments. @see wp_nav_menu()
+	 */
+	public function end_el( &$output, $item, $depth = 0, $args = array() ) {
+		$output .= "</li>"; // remove new line to remove the 4px gap between menu items
 	}
 }
 

@@ -34,9 +34,9 @@ class NF_Fields_ListCountry extends NF_Abstracts_List
             'value' => 'US',
         );
 
-        add_filter( 'ninja_forms_custom_columns',                 array( $this, 'custom_columns'   ), 10, 2 );
-        add_filter( 'ninja_forms_render_options_' . $this->_name, array( $this, 'filter_options'   ), 10, 2 );
-        add_filter( 'ninja_forms_subs_export_pre_value',          array( $this, 'filter_csv_value' ), 10, 3 );
+        add_filter( 'ninja_forms_custom_columns',                          array( $this, 'custom_columns'   ), 10, 2 );
+        add_filter( 'ninja_forms_render_options_' . $this->_name,          array( $this, 'filter_options'   ), 10, 2 );
+        add_filter( 'ninja_forms_subs_export_field_value_' . $this->_name, array( $this, 'filter_csv_value' ), 10, 1 );
     }
 
     public function custom_columns( $value, $field )
@@ -60,8 +60,15 @@ class NF_Fields_ListCountry extends NF_Abstracts_List
             $options[ $key ][ 'selected' ] = 1;
         }
 
-        return $options;
-    }
+		usort( $options, array($this,'sort_options_by_label') );
+
+		return $options;
+	}
+
+	private function sort_options_by_label( $option_a, $option_b )
+	{
+		return strcasecmp( $option_a['label'], $option_b['label'] );
+	}
 
     public function filter_options_preview( $field_settings )
     {
@@ -119,13 +126,10 @@ class NF_Fields_ListCountry extends NF_Abstracts_List
         return $options;
     }
 
-    public function filter_csv_value( $field_value, $field_id, $form_id )
+    public function filter_csv_value( $field_value )
     {
-        $field = Ninja_Forms()->form( $form_id )->get_field( $field_id );
-        if( $this->_name == $field->get_setting( 'type' ) ){
-            $lookup = array_flip( Ninja_Forms()->config( 'CountryList' ) );
-            if( isset( $lookup[ $field_value ] ) ) $field_value = $lookup[ $field_value ];
-        }
+        $lookup = array_flip( Ninja_Forms()->config( 'CountryList' ) );
+        if( isset( $lookup[ $field_value ] ) ) $field_value = $lookup[ $field_value ];
         return $field_value;
     }
 }
