@@ -198,6 +198,11 @@ function clearboth() {
 }
 add_shortcode("clearboth", "clearboth");
 
+function br() {
+    return '<br />';
+}
+add_shortcode("br", "br");
+
 // Add Shortcode
 function ctabutton( $atts , $content = null ) {
 
