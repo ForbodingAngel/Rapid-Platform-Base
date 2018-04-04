@@ -8,17 +8,17 @@ It started out as a relatively simple and small project to make it super easy an
 
 # What it does
 
-Rapid Platform Base originally started as a base theme and wordpress install for The Rapid Platform (http://www.therapidplatform.com) and while Rapid Platform is certainly still an important part, it's role gets progressively smaller as development continues.
+Rapid Platform Base originally started as a base theme and wordpress install for The Rapid Platform (http://www.therapidplatform.com). It has since grown further than Rapid Platform and is now it's own framework.
 
 Using the plugins provided and the customization options therein, this framework will allow you to erect custom sites in minutes. I even use it on my own company site (http://www.it-magique.com), and it is in use for quite a few other sites on the web as well.
 
-The layout is broken into several sections. The header area has 3 widget areas, Menu above, Header, and Menu below. In case it isn't obvious, the menu areas are there in case you want a horizontal menu. The theme supports sticky navigation menus (menus that stick to the top of the screen when you scroll past them) as well as simple static header menus. Sidebar menus are also supported, although the use of sidebars does require some minor theme editing (going into the relevant files and uncommenting the sidebar calling code).
+The layout is broken into several sections. The header area has 3 widget areas, Menu above, Header, and Menu below. In case it isn't obvious, the menu areas are there in case you want a horizontal menu. The theme supports sticky navigation menus (menus that stick to the top of the screen when you scroll past them) as well as simple static header menus. Sidebar menus are also supported.
 
 The main area is of course the content area, this is handled by post and page content.
 
 The footer area is in two sections, Footer and Site Info. Site info is at the very bottom and is where typically you would place your copyright text.
 
-The Rapid Platform supports columns via shortcodes and using the visual editor widget in these areas, you have complete control over them.
+The Rapid Platform Base supports columns via shortcodes and using the visual editor widget in these areas, you have complete control over them.
 
 # Customizer
 
@@ -26,7 +26,7 @@ In the appearance > customizer section you have customization options for nearly
 
 # Menu
 
-The menu is handled by the plugin "max mega menu". Unfortunately the devs of said plugin keep changing ID and Class names, which causes a lot of issues to my override styles. As a result I have simply bumped it's version number to one so high that it will never be auto-updated. Max mega menu allows for a lot of extremely cool things, and makes my least favorite part of creating a new site, very fun and pleasant.
+The menu is handled by the plugin "max mega menu". Max mega menu allows for a lot of extremely cool things, and makes my least favorite part of creating a new site, very fun and pleasant.
 
 # Header
 
@@ -42,7 +42,7 @@ Same thing as the header. Due to the fact that the footer area is in a widget ar
 
 # Is it responsive?
 
-Yes, Everything is responsive. The breakpoints for pretty much everything are set at 800px. Additionally, if you use sidebars, there is a post/page template for sidebars that will shove right hand sidebars to the top of the page so that your navigation menu will be at the top properly instead of being shoved below the page content. Additionally, the menu has specific styling for when it is in a sidebar to behave differently than when it is in a horizontal area (like the header).
+Yes, Everything is responsive. The breakpoints for pretty much everything are set at 800px (configurable in settings). Additionally, if you use sidebars, there is a post/page template for sidebars that will shove right hand sidebars to the top of the page so that your navigation menu will be at the top properly instead of being shoved below the page content. Additionally, the menu has specific styling for when it is in a sidebar to behave differently than when it is in a horizontal area (like the header).
 
 I highly advise playing around with it a bit and seeing how it all works.
 
@@ -56,4 +56,4 @@ Clone the repo (or download the zip), and create a new database. Import the data
 
 # What if I want to add some custom css?
 
-Not a problem, the theme looks for a file called site-specific-styles.css, if it exists, it will be imported. Put any custom css in that file (you might need to create it), and place that file in the root of the theme folder.
+Not a problem! Simply go into the customizer and add custom css there!
