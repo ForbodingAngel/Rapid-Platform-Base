@@ -209,14 +209,36 @@ function ctabutton( $atts , $content = null ) {
 	// Attributes
 	extract( shortcode_atts(
 		array(
+			'fontsize' => '',
 			'float' => '',
+			'margin' => '',
+			'padding' => '',
+			'backgroundcolor' => '',
 		), $atts )
 	);
 
 	// Code
-return '<div class="ctabutton" style="float: '.$float.';">'.$content.'</div>';
+return '<div class="ctabutton" style="font-size: '.$fontsize.'; float: '.$float.'; margin: '.$margin.'; padding: '.$padding.'; background-color: '.$backgroundcolor.';">'.$content.'</div>';
 }
 add_shortcode( 'ctabutton', 'ctabutton' );
+
+function callout( $atts , $content = null ) {
+
+	// Attributes
+	extract( shortcode_atts(
+		array(
+			'fontsize' => '',
+			'float' => '',
+			'margin' => '',
+			'padding' => '',
+			'backgroundcolor' => '',
+		), $atts )
+	);
+
+	// Code
+return '<div class="callout" style="font-size: '.$fontsize.'; float: '.$float.'; margin: '.$margin.'; padding: '.$padding.'; background-color: '.$backgroundcolor.';">'.$content.'</div>';
+}
+add_shortcode( 'callout', 'callout' );
 
 function limitwidth( $atts , $content = null ) {
 
