@@ -273,8 +273,32 @@ function responsive( $atts , $content = null ) {
 }
 add_shortcode("responsive-embed", "responsive");
 
+/*  Add responsive container to wordpress embeds */	
+function alx_embed_html( $html ) {
+	return '<div class="video-container">' . $html . '</div>';
+}
+
+add_filter( 'embed_oembed_html', 'alx_embed_html', 10, 3 );
+add_filter( 'video_embed_html', 'alx_embed_html' ); // Jetpack
+
 /* Remove wordpress theme and plugin editor */
 define( 'DISALLOW_FILE_EDIT', true );
+
+/* Disable Theme Switching */
+function bs_disable_theme_switching() {
+	global $submenu;
+	unset($submenu['themes.php'][5]);
+	unset($submenu['themes.php'][15]);
+}
+add_action('admin_init', 'bs_disable_theme_switching');
+
+/* Remove the themes section from the customizer. */
+function custom_remove_themes_section() {
+	global $wp_customize;
+	$wp_customize->remove_section( 'themes' );
+	$wp_customize->remove_control( 'active_theme' );
+}
+add_action( 'customize_register', 'custom_remove_themes_section' );
 
 /* Add a custom style for the post/page editor so that pages are easier to lay out */
 function my_theme_add_editor_styles() {

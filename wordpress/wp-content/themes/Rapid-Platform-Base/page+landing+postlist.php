@@ -18,7 +18,8 @@ get_header(); ?>
 				<a href="<?php the_permalink(); ?>"><div class="post-entry entry-content">
 				<?php if ( has_post_thumbnail() ) {the_post_thumbnail();} ?>
 				<h3><?php the_title(); ?></h3>
-				<p><strong>Posted on: </strong><i><?php the_date('m-d-Y'); ?></i></p>
+				<?php $post_date = get_the_date( 'F j, Y' ); ?>
+				<p><strong>Posted on: </strong><i><?php echo $post_date; ?></i></p>
 				<?php the_excerpt(); ?>
 				</div></a>
 			<?php endforeach; 

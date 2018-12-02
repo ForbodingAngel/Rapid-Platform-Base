@@ -29,9 +29,6 @@
 			</div>
 		</div>
 		<div style="clear:both"></div>
-		
-		<?php get_template_part( socialmediabar ); ?>
-		
 			<div class="site-info">
 				<div id="site-info-widget" class="clearfix" role="complementary">
 					
