@@ -1,6 +1,6 @@
 <?php
 /*
-Template Name: Page + Sidebar + Breadcrumbs
+Template Name: Page + Right Sidebar (When responsive, sidebar disappears)
 */
 
 get_header(); ?>
